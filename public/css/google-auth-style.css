@@ -1,0 +1,70 @@
+body {
+  background: rgb(101, 177, 198);
+}
+
+h3 {
+  margin: 0 0 10px 0;
+}
+
+p {
+  margin-top: 0;
+}
+
+.or {
+  margin: auto 0;
+  padding-top: 210px;
+  color:gold;
+}
+
+.title {
+  position: fixed;
+  top: 0;
+  margin-top: 70px;
+  font-size: 40px;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+.lead {
+  font-weight: bold;
+  font-family: 'Arvo', serif;
+  font-size: 26px;  
+  line-height: 40px;
+}
+
+.vc {
+  padding-top: 15px !important;
+  display: inline-block;
+}
+
+.login-container {  
+  
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-around;  
+}
+
+.card { 
+  border-radius: 40px;
+  height: 530px;
+  width: 380px;  
+  margin-top: 250px;
+  text-align: center;   
+}
+
+.github-login {
+  background: rgb(71, 43, 186);
+  background: linear-gradient(0deg, rgba(71, 43, 186, 1) 0%, rgba(44, 25, 121, 1) 100%);
+}
+
+.btn {
+  border-radius: 20px;
+}
+
+.img-logo { 
+  width: 160px;
+  height: 160px;
+}

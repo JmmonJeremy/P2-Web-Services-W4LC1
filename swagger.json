@@ -1,0 +1,468 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "goal-creation-api",
+    "description": "Goal Creation Process App Personal Project",
+    "version": "1.0.0"
+  },
+  "host": "p2-web-services-w4.onrender.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dashboard": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/oauth": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/oauth-callback": {
+      "get": {
+        "description": "",
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profiles/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieved of all Profiles"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "example": "any"
+                },
+                "motto": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "middleName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "idol": {
+                  "example": "any"
+                },
+                "photo": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully Created Profile Object"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/profiles/{username}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieved Profile"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Fields to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "Updated username"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "Updated firstName"
+                },
+                "middleName": {
+                  "type": "string",
+                  "example": "Updated middleName"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Updated lastName"
+                },
+                "idol": {
+                  "type": "string",
+                  "example": "Updated idol"
+                },
+                "photo": {
+                  "type": "string",
+                  "example": "Updated photo"
+                }
+              },
+              "required": "idol"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully Updated Profile"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Deletion of Profile"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/creations/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieved of all Creations"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "goal": {
+                  "example": "any"
+                },
+                "creationNumber": {
+                  "example": "any"
+                },
+                "motivator": {
+                  "example": "any"
+                },
+                "desire": {
+                  "example": "any"
+                },
+                "belief": {
+                  "example": "any"
+                },
+                "knowledge": {
+                  "example": "any"
+                },
+                "plan": {
+                  "example": "any"
+                },
+                "action": {
+                  "example": "any"
+                },
+                "victory": {
+                  "example": "any"
+                },
+                "creationDate": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully Created Creation Object"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/creations/{creationNumber}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "creationNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieved Creation"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "creationNumber",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier for the Creation"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Fields to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "goal": {
+                  "type": "string",
+                  "example": "Updated goal"
+                },
+                "motivator": {
+                  "type": "string",
+                  "example": "Updated motivator"
+                },
+                "desire": {
+                  "type": "string",
+                  "example": "Updated desire"
+                },
+                "belief": {
+                  "type": "string",
+                  "example": "Updated belief"
+                },
+                "knowledge": {
+                  "type": "string",
+                  "example": "Updated knowledge"
+                },
+                "plan": {
+                  "type": "string",
+                  "example": "Updated plan"
+                },
+                "action": {
+                  "type": "string",
+                  "example": "Updated action"
+                },
+                "victory": {
+                  "type": "string",
+                  "example": "Updated victory"
+                }
+              },
+              "required": "goal"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully Updated Creation"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "creationNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Deletion of Creation"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}
