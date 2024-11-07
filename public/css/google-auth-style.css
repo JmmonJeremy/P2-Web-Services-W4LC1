@@ -10,6 +10,41 @@ p {
   margin-top: 0;
 }
 
+h6,
+label {
+  color: yellow !important;
+}
+
+.date-input-field select, .date-input-field input {
+  width: 30%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+/* Underline color when input is focused */
+.input-field input[type="text"]:not(:focus),
+.input-field input[type="number"]:not(:focus) {
+  border-bottom: 1px solid blue !important;  /* Change the default color */
+  box-shadow: 0 1px 0 0 blue !important;
+}
+
+/* Unfocused border color for textarea */
+.input-field textarea:not(:focus) {
+  border: 2px solid blue;
+  box-shadow: none;
+}
+
+/* Reset to Materialize's default focus color */
+.input-field textarea:focus {
+  border: 5px solid #26a69a !important; /* Materialize default teal color */
+  box-shadow: 0 5px 0 0 #26a69a !important; /* Match the color for the shadow */
+}
+
+/* Change label font size */
+.input-field label {
+  font-size: 18px !important; /* Adjust to your preferred size */
+}
+
 .or {
   margin: auto 0;
   padding-top: 210px;

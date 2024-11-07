@@ -4,13 +4,16 @@ const creation = require('./creation');
 const swagger = require('./swagger');
 const oauth = require('./oauth');
 const oauthCallback = require('./oauth-callback');
-const static = require("./static");
-const auth = require('./auth');
+const static = require('./static');
+const auth = require('./auth'); // google auth 
+const dashboard = require('./dashboard'); // google auth 
+const goals = require('./goals'); // google auth 
+const { ensureAuth, ensureGuest } = require('../middleware/auth') // google auth 
 
 // google auth 
 //  @desc   Login/Landing page
 //  @route  GET /
-routes.get('/', (req, res) => {
+routes.get('/', ensureGuest, (req, res) => {
   res.render('login', {
       layout: 'login',
   })
@@ -19,9 +22,11 @@ routes.get('/', (req, res) => {
 // google auth 
 //  @desc   Dashboard
 //  @route  GET /dashboard
-routes.get('/dashboard', (req, res) => {
-  res.render('dashboard')
-})
+// routes.get('/dashboard', ensureAuth, (req, res) => { 
+//   res.render('dashboard', {
+//     name: req.user.firstName,
+//   });
+// })
 
 // See https://swagger-autogen.github.io/docs/swagger-2/schemas-and-definitions under @schema section for guidance
 // routes.get('/', (req, res) => {
@@ -62,5 +67,7 @@ routes.use('/', swagger);
 routes.use('/profiles', profile);
 routes.use('/creations', creation);
 routes.use('/auth', auth);  // google auth - put here instead of in root/index.js
+routes.use('/dashboard', dashboard);  // google auth - put here instead of in root/index.js
+routes.use('/goals', goals);  // google auth - put here instead of in root/index.js
 
 module.exports = routes;

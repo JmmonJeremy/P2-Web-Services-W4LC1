@@ -1,1 +1,46 @@
-<h1>Dashboard</h1>
+{{!--  // google auth  --}}
+<h6>Dashboard</h6>
+<h3>Welcome {{name}}</h3>
+<p>Here are your goal creatioins:</p>
+{{#if creations}}
+<table class="striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Motivator</th>
+            <th>Desire</th>
+            <th>Belief</th>
+            <th>Knowledge</th>
+            <th>Goal</th>
+            <th>Plan</th>
+            <th>Action</th>
+            <th>Victory</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each creations}}
+        <tr>
+            <td><a href="/creations/{{_id}}">{{goal}}</a></td>
+            <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
+            <td><span class="dash-status">{{status}}</span></td>
+            <td>
+                <a href="/creations/edit/{{_id}}" class="btn btn-float">
+                    <i class="fas fa-edit"></i>
+                </a>
+
+                <form action="/creations/{{_id}}" method="POST" id="delete-form">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn red">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<p>You have no goals created</p>
+{{/if}}

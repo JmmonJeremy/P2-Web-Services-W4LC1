@@ -1,0 +1,83 @@
+{{!--  // google auth  --}}
+<h3>Create Goal</h3>
+<div class="row">
+    <form action="/goals" method="POST" class="col s12">
+        <div class="row">
+            <div class="input-field">
+                <input type="number" id="creationNumber" name="creationNumber" min="0.01">
+                <label for="number">Creation Number</label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="motivator" name="motivator">
+                <label for="motivator">Motivator</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="desire" name="desire">
+                <label for="desire">Desire</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="belief" name="belief">
+                <label for="belief">Belief</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="knowledge" name="knowledge">
+                <label for="knowledge">Knowledge</label>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="goal" name="goal">
+                <label for="goal">Goal</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <h6>Plan</h6>
+                <textarea id="plan" name="plan"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <select id="status" name="status">
+                    <option value="public" selected>Public</option>
+                    <option value="private">Private</option>
+                </select>
+                <label for="status">Status</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="action" name="action">
+                <label for="action">Action</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <h6>Victory</h6>
+                <textarea id="victory" name="victory"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="submit" value="Save" class="btn">
+            <a href="/dashboard" class="btn orange">Cancel</a>
+        </div>
+    </form>
+</div>
