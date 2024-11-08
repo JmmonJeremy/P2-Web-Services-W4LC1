@@ -15,29 +15,139 @@ label {
   color: yellow !important;
 }
 
-.date-input-field select, .date-input-field input {
-  width: 30%;
-  display: inline-block;
-  margin-right: 5px;
+/* Make the row a flex container */
+.optional-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes items to edges */ 
+  margin-bottom: -30px; 
 }
 
-/* Underline color when input is focused */
+/* Right-align the inputs */
+.right-aligned-inputs {
+  display: flex;
+  align-items: center;
+  gap: 100px; /* Adjusts spacing between inputs */
+  margin-left: auto; /* Pushes this container to the right */
+  margin-right: 10px;
+}
+
+h4.optional-label {
+  color: yellow;
+  border-bottom: 3px solid yellow; /* Sets the yellow line under the h4 */
+  padding-bottom: 5px; /* Adds space between the text and the line */ 
+  margin-bottom: 50px; 
+}
+
+.c-num input {
+  width: 85px !important;
+  margin-left: 150px !important;  
+}
+
+.c-num label[for="creationNumber"].active,
+.c-num label {
+  top: 20%; /* Center vertically within the select box */
+}
+
+.date-row {
+  display: flex; 
+  align-items: center;
+}
+
+.date-input-field {
+  margin: 0;
+}
+
+.date-input-field select, 
+.date-input-field input {  
+  display: inline-block; 
+  width: 85px !important; /* Set the width of the dropdown container & imput box */   
+}
+
+/* Styling the dropdown select input field */
+.date-input-field select {
+  appearance: none;            /* Hides the default arrow */
+  -webkit-appearance: none;    /* Hides the default arrow on webkit browsers */
+  background-color: rgb(101, 177, 198); /* Set custom background color */
+  border: none; /* Remove default border */
+  border-bottom: 2px solid blue; /* Add custom blue bottom border */
+  color: white; /* Text color */  
+}
+
+.date-input-field select:focus {
+  outline: none; /* Ensures no outline when the select box is focused */ 
+}
+
+/* Add custom arrow icon */
+.date-input-field {
+  position: relative; /* Custom arrow symbol */
+}
+
+.date-input-field::after {
+  content: '▼'; /* Custom arrow symbol */
+  font-size: 16px;
+  color: blue; /* Custom arrow color */
+  position: absolute; /* To position custom arrow */
+  right: 10px; /* To position custom arrow */
+  top: 50%; /* Center vertically within the select box */
+  transform: translateY(-50%); /* Adjust for exact vertical centering */
+  pointer-events: none; /* Keeps arrow non-clickable */
+}
+
+.date-input-field label {
+  padding-right: 5px; /* Adds some spacing beside the label */
+  font-size: 18px; /* Adjust to your preferred size */
+}
+
+.slash {
+  padding: 0 15px 0 5px;
+  font-weight: bold;
+}
+
+/* Prevent Materialize's focus effect from transforming the label */
+.c-num label[for="creationNumber"],
+.c-num label[for="creationNumber"].active,
+.input-field label[for="year"],
+.input-field label[for="year"].active {
+  transform: none !important; /* Stops the font from changing size */
+}
+
+/* Keep label to the left of the Year input */
+.year label {   
+  top: 27%; /* Center the label vertically */ 
+}
+
+/* Adjust Year input field */
+.year input#year {
+  margin-left: 50px; /* Add padding to account for the label on the left */
+  padding-top: 10px
+}
+
+/* Text color when input is focused */
+.input-field input[type="text"]:focus,
+.input-field input[type="number"]:focus {  
+  color: white;
+}
+
+/* Underline color when input is not focused */
 .input-field input[type="text"]:not(:focus),
 .input-field input[type="number"]:not(:focus) {
   border-bottom: 1px solid blue !important;  /* Change the default color */
   box-shadow: 0 1px 0 0 blue !important;
+  color: white;
 }
 
 /* Unfocused border color for textarea */
 .input-field textarea:not(:focus) {
   border: 2px solid blue;
-  box-shadow: none;
+  box-shadow: none;  
 }
 
 /* Reset to Materialize's default focus color */
 .input-field textarea:focus {
   border: 5px solid #26a69a !important; /* Materialize default teal color */
   box-shadow: 0 5px 0 0 #26a69a !important; /* Match the color for the shadow */
+  color: white;
 }
 
 /* Change label font size */
@@ -71,10 +181,6 @@ label {
 .vc {
   padding-top: 15px !important;
   display: inline-block;
-}
-
-.login-container {  
-  
 }
 
 .card-content {
