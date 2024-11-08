@@ -1,9 +1,9 @@
 {{!--  // google auth  --}}
-<h3>Create Goal</h3>
+<h3>Create: Focused & Fueled Goal</h3>
 <div class="row">
     <form action="/goals" method="POST" class="col s12">
         <div class="row optional-row">
-            <h4 class="optional-label">Optional Input &#x21C9;</h4>
+            <h4 class="optional-label">Optional Input <span class="guidance">(Will autofill if left blank)</span> &#x21C9;</h4>
 
             <!-- New container for right-aligned inputs -->
             <div class="right-aligned-inputs">
@@ -16,7 +16,7 @@
             
                 <div class="row date-row">
                     <div class="date-input-field">
-                        <label for="month">Month</label>
+                        <label for="month">Date</label>
                         <select id="month" name="month">
                             <option value="" disabled selected>Month</option>
                             <!-- Month options (1-12) -->
@@ -38,7 +38,7 @@
                     <span class="slash">/</span>
 
                     <div class="date-input-field">
-                        <label for="day">Day</label>
+                        {{!-- <label for="day">Day</label> --}}
                         <select id="day" name="day">
                             <option value="" disabled selected>Day</option>
                             <!-- Day options (1-30) -->
@@ -83,71 +83,102 @@
                     </div>
                 </div>
             </div>
+
+            <h4 class="optional-end">|</h4>
+        </div>
+
+        <h4 class="required-input">&#x21CA; Required</h4>
+
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="goal" name="goal">
+                <label for="goal">
+                    Goal &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(What you want to accomplish)</span>
+                </label>
+            </div>
         </div>
 
         <div class="row">
             <div class="input-field">
                 <input type="text" id="motivator" name="motivator">
-                <label for="motivator">Motivator</label>
+                <label for="motivator">
+                    Motivator &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(Outside influence motivating you to accomplish goal)</span>
+                </label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field">
                 <input type="text" id="desire" name="desire">
-                <label for="desire">Desire</label>
+                <label for="desire">
+                    Desire &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(Desired result from accomplishing goal)</span>
+                </label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field">
                 <input type="text" id="belief" name="belief">
-                <label for="belief">Belief</label>
+                <label for="belief">
+                    Belief &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(Positive personal result goal will bring)</span>
+                </label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field">
                 <input type="text" id="knowledge" name="knowledge">
-                <label for="knowledge">Knowledge</label>
+                <label for="knowledge">
+                    Knowledge &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(A promised result of accomplishing goal)</span>
+                </label>
             </div>
-        </div>
-    
+        </div>    
+        
         <div class="row">
             <div class="input-field">
-                <input type="text" id="goal" name="goal">
-                <label for="goal">Goal</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="input-field">
-                <h6>Plan</h6>
+                <h6>
+                    Plan &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(Planned steps needed to accomplish goal)</span>
+                </h6>
                 <textarea id="plan" name="plan"></textarea>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="action" name="action" value="Followed goal creation approach and wrote goal, reasons for accomplishing it, and plan for how to do it.">
+                <label for="action">
+                    Action &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(Steps taken to accomplish goal)</span>
+                </label>
+            </div>
+        </div>
 
         <div class="row">
             <div class="input-field">
+                <h6>
+                    Victory &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(Good things that have happened while striving for goal)</span>
+                </h6>
+                <textarea id="victory" name="victory">Thought about and recorded what I wanted to accomplish, reasons for accomplishing it, and how to do it.</textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field blue-arrow">
                 <select id="status" name="status">
-                    <option value="public" selected>Public</option>
-                    <option value="private">Private</option>
+                    <option value="private" selected>Private</option>
+                    <option value="public">Public</option>
                 </select>
-                <label for="status">Status</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="input-field">
-                <input type="text" id="action" name="action">
-                <label for="action">Action</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="input-field">
-                <h6>Victory</h6>
-                <textarea id="victory" name="victory"></textarea>
+                <label for="status">
+                    Status &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(Keep goal creation private or open for others to see)</span>
+                </label>
             </div>
         </div>
 

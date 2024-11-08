@@ -39,6 +39,13 @@ h4.optional-label {
   margin-bottom: 50px; 
 }
 
+/* Manage label font size */
+span.guidance,
+.input-field label {
+  font-size: 18px !important; /* Adjust to your preferred size */
+  color: blue;
+}
+
 .c-num input {
   width: 85px !important;
   margin-left: 150px !important;  
@@ -123,6 +130,33 @@ h4.optional-label {
   padding-top: 10px
 }
 
+/* Adjust end symbol: | for optional inputs */
+h4.optional-end {
+  color: yellow;
+  padding-bottom: 5px; /* Adds space between the text and the line */ 
+  margin-bottom: 50px; 
+}
+
+h4.required-input::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Matches the width of the text */
+  height: 5px;
+  border-top: 3px solid red; /* Red line above text */
+  box-shadow: 0 2px 8px #fff; /* White glow around the line */  
+}
+
+h4.required-input {
+  color: red;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff;
+  margin-left: -15px;
+  display: inline-block; /* Make the top line take only the width of h2 content */
+  padding-top: 10px; /* Adds space for the top line */
+  position: relative; /* necessary for placement of top line */
+}
+
 /* Text color when input is focused */
 .input-field input[type="text"]:focus,
 .input-field input[type="number"]:focus {  
@@ -140,7 +174,8 @@ h4.optional-label {
 /* Unfocused border color for textarea */
 .input-field textarea:not(:focus) {
   border: 2px solid blue;
-  box-shadow: none;  
+  box-shadow: none; 
+  color: white; 
 }
 
 /* Reset to Materialize's default focus color */
@@ -150,10 +185,18 @@ h4.optional-label {
   color: white;
 }
 
-/* Change label font size */
-.input-field label {
-  font-size: 18px !important; /* Adjust to your preferred size */
+/* Add a custom blue arrow using a pseudo-element for Status*/
+.blue-arrow:after {
+  content: '▼'; /* Unicode for downward arrow */
+  color: blue; /* Arrow color */
+  position: absolute;
+  right: 6.5px; /* Align arrow inside the select box */
+  top: 14px; /* Vertically center the arrow */
+  pointer-events: none; /* Arrow not clickable */
+  font-size: 16px;
 }
+
+
 
 .or {
   margin: auto 0;
