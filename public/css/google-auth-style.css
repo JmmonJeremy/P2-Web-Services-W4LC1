@@ -15,21 +15,22 @@ label {
   color: yellow !important;
 }
 
-/* Make the row a flex container */
-.optional-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Pushes items to edges */ 
-  margin-bottom: -30px; 
-}
-
 /* Right-align the inputs */
 .right-aligned-inputs {
   display: flex;
   align-items: center;
   gap: 100px; /* Adjusts spacing between inputs */
   margin-left: auto; /* Pushes this container to the right */
-  margin-right: 10px;
+  margin-right: 10px;  
+}
+
+/* Make the row a flex container */
+.optional-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes items to edges */ 
+  margin-bottom: -30px;
+  flex-direction: wrap; 
 }
 
 h4.optional-label {
@@ -59,6 +60,7 @@ span.guidance,
 .date-row {
   display: flex; 
   align-items: center;
+  white-space: nowrap; /* Prevent wrapping */
 }
 
 .date-input-field {
@@ -252,3 +254,81 @@ h4.required-input {
   width: 160px;
   height: 160px;
 }
+
+/* CKEDITOR STYLING *********************************************************************************/
+
+/* CKEditor specific content styling */
+.ckeditor-body {
+  background-color: rgb(101, 177, 198);
+  color: #fff;
+}
+
+/* Optionally add CSS for blue border */
+.editor-blue-border {
+  border: 3px solid blue!important; /* Using !important to ensure it overrides existing styles */
+}
+
+/* Change the background of the toolbar to blue */
+.cke_top {
+  background-color: blue !important;
+}
+
+/* Center toolbar icons horizontally in CKEditor */
+.cke_top, .cke_toolbox {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important; /* To have dropdown menus wrap to 2nd line */
+}
+
+.cke_toolgroup {
+  display: inline-flex !important; /* Keep each tool group in a single line */
+}
+
+
+/* Change the button (tool) icons in the toolbar to white */
+/* .cke_button_icon { */
+/*    filter: invert(1) !important;*/ /* This inverts the colors, making white icons */
+/* } */
+
+.cke_button {
+  background-color: yellow !important; /* Sets a solid background for buttons */          
+}
+
+/* Force black text for all CKEditor dialog labels and fields */
+.cke_dialog_ui_input_text,
+.cke_dialog_ui_input_select,
+.cke_dialog_ui_labeled_label,
+.cke_dialog_ui_input_textarea {
+  color: black !important;
+}
+
+/* Force white text for all CKEditor dropdown heading */
+.cke_combo__styles .cke_combo_text,
+.cke_combo__format .cke_combo_text,
+.cke_combo__font .cke_combo_text,
+.cke_combo__fontsize .cke_combo_text {
+  color: white !important;
+}
+
+/* Put a white down arrow behind the small black one in CKEditor dropdown heading */
+.cke_combo_button {           
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>') !important;
+  background-position: calc(100% + 2px) center !important;
+  background-repeat: no-repeat !important;
+  background-size: 30px 30px !important;
+}
+
+/* Black arrow when hovered over or open */
+.cke_combo_button:hover,
+.cke_combo_button[aria-expanded="true"] {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="black"><path d="M7 10l5 5 5-5z"/></svg>') !important;
+}
+
+/* CSS for styling when dropdown title is being hovered over & open*/
+.cke_combo_button:hover, 
+.cke_combo_button[aria-expanded="true"],          
+.cke_combo_button:hover .cke_combo_text, 
+.cke_combo_button[aria-expanded="true"] .cke_combo_text {
+  background-color: yellow !important; /* Changes the background color */
+  color: black !important; /* Changes the text color to black */
+} 

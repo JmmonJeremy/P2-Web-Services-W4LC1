@@ -2,7 +2,7 @@
 const AutoIncrement = require('mongoose-sequence'); // Make sure AutoIncrement is required
 
 module.exports = (mongoose) => {
-  const CreationSchema = new mongoose.Schema(
+  const CreationGoalSchema = new mongoose.Schema(
       {
         creationNumber: { 
           type: Number, 
@@ -58,9 +58,9 @@ module.exports = (mongoose) => {
     );
 
   // Apply the auto-increment plugin
-  // CreationSchema.plugin(AutoIncrement(mongoose), { inc_field: 'creationNumber' });
+  // CreationGoalSchema.plugin(AutoIncrement(mongoose), { inc_field: 'creationNumber' });
   // Pre-save hook to set creationNumber and ensure creationDate is in the correct format
-  CreationSchema.pre('save', async function (next) {
+  CreationGoalSchema.pre('save', async function (next) {
     try {
       let potentialNumber;
   
@@ -69,25 +69,25 @@ module.exports = (mongoose) => {
         potentialNumber = this.creationNumber;
   
         // Check if the provided creationNumber exists in the database
-        let exists = await mongoose.model('goals').findOne({ creationNumber: potentialNumber });
+        let exists = await mongoose.model('creationGoal').findOne({ creationNumber: potentialNumber });
   
         if (exists) {
           // If the provided number exists, calculate count + 1 as the fallback
-          const count = await mongoose.model('goals').countDocuments();
+          const count = await mongoose.model('creationGoal').countDocuments();
           potentialNumber = count + 1;
         }
       } else {
         // No creationNumber provided, calculate count + 1 directly
-        const count = await mongoose.model('goals').countDocuments();
+        const count = await mongoose.model('creationGoal').countDocuments();
         potentialNumber = count + 1;
       }
   
       // Now check if potentialNumber (whether calculated or fallback) exists
-      let exists = await mongoose.model('goals').findOne({ creationNumber: potentialNumber });
+      let exists = await mongoose.model('creationGoal').findOne({ creationNumber: potentialNumber });
       while (exists) {
         // If the calculated or fallback number exists, increment until a unique number is found
         potentialNumber += 1;
-        exists = await mongoose.model('goals').findOne({ creationNumber: potentialNumber });
+        exists = await mongoose.model('creationGoal').findOne({ creationNumber: potentialNumber });
       }
   
       // Assign the unique number to this.creationNumber
@@ -114,7 +114,7 @@ module.exports = (mongoose) => {
   
 
   // Explicitly specify the collection name
-  const Creation = mongoose.model('goals', CreationSchema, 'goals');
-  module.exports = Creation;
-  return Creation;
+  const CreationGoal = mongoose.model('CreationGoal', CreationGoalSchema, 'CreationGoal');
+  module.exports = CreationGoal;
+  return CreationGoal;
 };

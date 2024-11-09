@@ -2,16 +2,17 @@
 <h6>Dashboard</h6>
 <h3>Welcome {{name}}</h3>
 <p>Here are your goal creatioins:</p>
-{{#if creations}}
+{{#if goalCreations}}
 <table class="striped">
     <thead>
         <tr>
             <th>#</th>
+            <th>Date</th>
+            <th>Goal</th>            
             <th>Motivator</th>
             <th>Desire</th>
             <th>Belief</th>
-            <th>Knowledge</th>
-            <th>Goal</th>
+            <th>Knowledge</th>            
             <th>Plan</th>
             <th>Action</th>
             <th>Victory</th>
@@ -20,17 +21,18 @@
         </tr>
     </thead>
     <tbody>
-        {{#each creations}}
+        {{#each goalCreations}}
         <tr>
-            <td><a href="/creations/{{_id}}">{{goal}}</a></td>
+            <td><a href="/goalCreations/{{_id}}">{{goal}}</a></td>
+            <td>{{creationNumber}}</td>
             <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
             <td><span class="dash-status">{{status}}</span></td>
             <td>
-                <a href="/creations/edit/{{_id}}" class="btn btn-float">
+                <a href="/goalCreations/edit/{{_id}}" class="btn btn-float">
                     <i class="fas fa-edit"></i>
                 </a>
 
-                <form action="/creations/{{_id}}" method="POST" id="delete-form">
+                <form action="/goalCreations/{{_id}}" method="POST" id="delete-form">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn red">
                         <i class="fas fa-trash"></i>

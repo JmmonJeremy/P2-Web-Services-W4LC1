@@ -7,7 +7,7 @@ const oauthCallback = require('./oauth-callback');
 const static = require('./static');
 const auth = require('./auth'); // google auth 
 const dashboard = require('./dashboard'); // google auth 
-const goals = require('./goals'); // google auth 
+const creationGoals = require('./creationGoals'); // google auth 
 const { ensureAuth, ensureGuest } = require('../middleware/auth') // google auth 
 
 // google auth 
@@ -68,6 +68,6 @@ routes.use('/profiles', profile);
 routes.use('/creations', creation);
 routes.use('/auth', auth);  // google auth - put here instead of in root/index.js
 routes.use('/dashboard', dashboard);  // google auth - put here instead of in root/index.js
-routes.use('/goals', goals);  // google auth - put here instead of in root/index.js
+routes.use('/creationGoals', creationGoals);  // google auth - put here instead of in root/index.js
 
 module.exports = routes;
