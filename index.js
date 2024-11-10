@@ -15,6 +15,10 @@ const swaggerDocument = require('./swagger.json');
 
 const app = express();
 
+// Body parser
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
 // google auth 
 // Load config ***This is necessary to use the config.env file instead of .env file
 // dotenv.config({path: './config/config.env'});
@@ -47,9 +51,16 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // google auth
+// Handlebars Helpers
+const {
+  formatDate,
+} = require('./helpers/hbs')
+
+
+// google auth
 // Handlebars    (Order #4)(OLD ORDER #7)
 // app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'})); // google auth (for versions below v6)
-app.engine('.hbs', engine({ defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
+app.engine('.hbs', engine({ helpers: { formatDate, }, defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
 app.set('view engine', '.hbs');
 
 // CORS setup    (Order #5)(OLD ORDER #2)

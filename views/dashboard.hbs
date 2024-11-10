@@ -1,21 +1,15 @@
 {{!--  // google auth  --}}
-<h6>Dashboard</h6>
-<h3>Welcome {{name}}</h3>
-<p>Here are your goal creatioins:</p>
+<h5 class="pg-header">Dashboard</h5>
+<h3 class="welcome">Welcome {{name}}</h3>
+<h6 class="mini-header">Here are your goal creatioins:</h6>
 {{#if goalCreations}}
 <table class="striped">
-    <thead>
+    <thead class="btm-bdr-yellow">
         <tr>
             <th>#</th>
             <th>Date</th>
-            <th>Goal</th>            
-            <th>Motivator</th>
-            <th>Desire</th>
-            <th>Belief</th>
-            <th>Knowledge</th>            
-            <th>Plan</th>
-            <th>Action</th>
-            <th>Victory</th>
+            <th>Goal</th>
+            <th>Plan</th>            
             <th>Status</th>
             <th></th>
         </tr>
@@ -23,11 +17,14 @@
     <tbody>
         {{#each goalCreations}}
         <tr>
-            <td><a href="/goalCreations/{{_id}}">{{goal}}</a></td>
-            <td>{{creationNumber}}</td>
-            <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
-            <td><span class="dash-status">{{status}}</span></td>
-            <td>
+            <td class="btm-bdr-yellow">{{creationNumber}}</td>
+            <td class="btm-bdr-yellow">{{formatDate creationDate 'MMMM Do YYYY, h:mm:ss a'}}</td>            
+            <td class="btm-bdr-yellow"><a class="goal-link" href="/goalCreations/{{_id}}">{{goal}}</a></td>
+            <td class="btm-bdr-yellow">{{plan}}</td>
+            
+            
+            <td class="btm-bdr-yellow"><span class="dash-status">{{status}}</span></td>
+            <td class="btm-bdr-yellow">
                 <a href="/goalCreations/edit/{{_id}}" class="btn btn-float">
                     <i class="fas fa-edit"></i>
                 </a>

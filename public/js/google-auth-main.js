@@ -1,16 +1,17 @@
+// Initialize Materialize components
 M.Sidenav.init(document.querySelector('.sidenav'))
 M.FormSelect.init(document.querySelector('#status'))
 
+// Disable CKEditor notifications
 CKEDITOR.on('instanceReady', function() {
-// Completely disable all notifications
-CKEDITOR.plugins.notification = CKEDITOR.plugins.notification || {};
-CKEDITOR.plugins.notification.prototype.show = function() { return false; };
+    CKEDITOR.plugins.notification = CKEDITOR.plugins.notification || {};
+    CKEDITOR.plugins.notification.prototype.show = function() { return false; };
 });
 
 const fields = ['plan', 'action', 'victory']; // Array of field IDs
 
-fields.forEach(fieldId => {
-    // Initialize CKEditor for 'plan', 'action', & 'victory' field
+// Initialize CKEditor for 'plan', 'action', & 'victory' field
+fields.forEach(fieldId => {    
     CKEDITOR.replace(fieldId, {
         plugins: 'wysiwygarea, toolbar, basicstyles, format, stylescombo, find, link, image, font, colorbutton, colordialog, ' 
                 +'justify, pastefromword, find, removeformat, copyformatting, undo, pagebreak, preview, print, save, table, ' 
@@ -43,4 +44,16 @@ fields.forEach(fieldId => {
         ],            
         removeButtons: 'Subscript,Superscript', // Remove buttons you don't need *needed to see Underline symbol                
     });
+});
+
+// Empty the year value if the date is not entered
+document.getElementById('goalCreationForm').addEventListener('submit', function(event) {
+    const month = document.getElementById('month')?.value;
+    const day = document.getElementById('day')?.value;
+    const yearInput = document.getElementById('year');
+    
+    // Clear the year if month or day is blank
+    if (!month || !day) {
+        yearInput.value = '';
+    }
 });

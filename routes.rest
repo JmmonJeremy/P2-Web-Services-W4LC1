@@ -6,6 +6,7 @@ GET http://localhost:3000/api-docs
 ###
 // getting homepage info
 GET http://localhost:3000/
+Authorization: Bearer ya29.a0AeDClZBrhT6iQAArZzbetvDHqMcA6JUT43izL4qwi3FVC_8gmcYRC1cUpBPPzMv4QXW56tFTbL17pJJmLqZ7ilsoDEqro7q6tYOqpOcdalkmTlNsJC2W9fhPLLbM5T_XQGHkJB93RI8AwDvFX-_PUHRY9BpugvPpclYJeNqkaCgYKAd8SARISFQHGX2Mii611J--7suG8_9vmKAdhxQ0175
 ###
 // getting list of all profiles (ordered by username alphabetically)
 GET http://localhost:3000/profiles
@@ -60,20 +61,24 @@ DELETE http://localhost:3000/profiles/DemoWoman HTTP/1.1
 DELETE http://localhost:3000/creations/10 HTTP/1.1
 ###
 // CREATING CREATION WITH POST
-POST http://localhost:3000/creations HTTP/1.1 
+POST http://localhost:3000/creationGoals HTTP/1.1 
+Authorization: Bearer ya29.a0AeDClZCSWNzdR16FGSvojGaxYigcysDnAUlcWbes2XgZRz-58MHmsDAA7kj2GU1MnsNSEYIJSSmd8GY24nR7ZKRNh89mPnxbXswSMUbq-mJQ7Y_BMMuGC2e6NCoEUpvTcrrECbUPXFfxpYkS-TbyL7CJFECVTua_S8Q1VYoCaCgYKAfcSARISFQHGX2MipaiG0gxc0h3PXD2A0bHDsA0175
 Content-Type: application/json
 
+
 {  
+  "creationDate": "9/6/24",
   "creationNumber": 3,
-  "motivator": "I can be a demoMan for others.",
+  "goal": "Demo how to post a new Creation Object",
+  "motivator": "I can be a demoMan for others",
   "desire": "To Demo things for others",
   "belief": "Everyone needs Demos",
-  "knowledge": "People learn by Demo",
-  "goal": "Demo how to post a new Creation Object",
+  "knowledge": "People learn by Demo",  
   "plan": "Enter a Post Demo",
   "action": "I saved a Post Demo",
   "victory": "I created a Post Demo",
-  "creationDate": "9/6/24"
+  "status": "Public",
+  "user": "100989098722327618136"
   }
 ###
 // CREATING PROFILE WITH POST

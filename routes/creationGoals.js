@@ -15,8 +15,9 @@ routes.get('/add', ensureAuth, (req, res) => {
 // @route   POST /creationGoals
 routes.post('/', ensureAuth, async (req, res) => {
   try {
+    console.log('$$$$$$$$$$$$$$$$$$$$ CreationGoal model:', CreationGoal);
     req.body.user = req.user.id
-    await CreationGoal.create(req.body)
+    await CreationGoal.create(req.body)    
     res.redirect('/dashboard')
   } catch (err) {
     console.error(err)
@@ -28,13 +29,13 @@ routes.post('/', ensureAuth, async (req, res) => {
 // @route   GET /creationGoals
 routes.get('/', ensureAuth, async (req, res) => {
   try {
-    const creations = await CreationGoal.find({ status: 'public' })
+    const creationGoals = await CreationGoal.find({ status: 'Public' })
       .populate('user')
       .sort({ createdAt: 'desc' })
       .lean()
 
     res.render('creationGoals/index', {
-      creations,
+      creationGoals,
     })
   } catch (err) {
     console.error(err)

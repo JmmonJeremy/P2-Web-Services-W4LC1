@@ -8,6 +8,14 @@ module.exports = (mongoose) => {
           type: Number, 
           unique: true 
         },
+        creationDate: { 
+          type: Date, 
+          default: Date.now 
+        },  
+        goal: {
+          type: String,
+          required: true
+        },
         motivator: {
           type: String,
           required: true
@@ -24,10 +32,7 @@ module.exports = (mongoose) => {
           type: String,
           required: true
         },
-        goal: {
-          type: String,
-          required: true
-        },
+        
         plan: {
           type: String,
           required: true
@@ -42,17 +47,13 @@ module.exports = (mongoose) => {
         },
         status: {
           type: String,
-          default: 'private',
-          enum: ['public', 'private']
+          default: 'Private',
+          enum: ['Public', 'Private']
         },
         user: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'User',
-        },
-        creationDate: { 
-          type: Date, 
-          default: Date.now 
-        },       
+        }             
       },
       { timestamps: true }
     );
@@ -69,25 +70,25 @@ module.exports = (mongoose) => {
         potentialNumber = this.creationNumber;
   
         // Check if the provided creationNumber exists in the database
-        let exists = await mongoose.model('creationGoal').findOne({ creationNumber: potentialNumber });
+        let exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber });
   
         if (exists) {
           // If the provided number exists, calculate count + 1 as the fallback
-          const count = await mongoose.model('creationGoal').countDocuments();
+          const count = await mongoose.model('CreationGoal').countDocuments();
           potentialNumber = count + 1;
         }
       } else {
         // No creationNumber provided, calculate count + 1 directly
-        const count = await mongoose.model('creationGoal').countDocuments();
+        const count = await mongoose.model('CreationGoal').countDocuments();
         potentialNumber = count + 1;
       }
   
       // Now check if potentialNumber (whether calculated or fallback) exists
-      let exists = await mongoose.model('creationGoal').findOne({ creationNumber: potentialNumber });
+      let exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber });
       while (exists) {
         // If the calculated or fallback number exists, increment until a unique number is found
         potentialNumber += 1;
-        exists = await mongoose.model('creationGoal').findOne({ creationNumber: potentialNumber });
+        exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber });
       }
   
       // Assign the unique number to this.creationNumber

@@ -1,7 +1,7 @@
 {{!--  // google auth  --}}
 <h3>Create: Focused & Fueled Goal</h3>
 <div class="row">
-    <form action="/goalCreationss" method="POST" class="col s12">
+    <form action="/creationGoals" method="POST" class="col s12" id="goalCreationForm">
         <div class="row optional-row">
             <h4 class="optional-label">Optional Input <span class="guidance">(Will autofill if left blank)</span> &#x21C9;</h4>
 
@@ -17,7 +17,7 @@
                 <div class="row date-row">
                     <div class="date-input-field">
                         <label for="month">Date</label>
-                        <select id="month" name="month">
+                        <select id="month" name="creationDate[month]">
                             <option value="" disabled selected>Month</option>
                             <!-- Month options (1-12) -->
                             <option value="1">1</option>
@@ -39,7 +39,7 @@
 
                     <div class="date-input-field">
                         {{!-- <label for="day">Day</label> --}}
-                        <select id="day" name="day">
+                        <select id="day" name="creationDate[day]">
                             <option value="" disabled selected>Day</option>
                             <!-- Day options (1-30) -->
                         <option value="1">1</option>
@@ -79,7 +79,7 @@
 
                     <div class="input-field date-input-field year">
                         <label for="year">Year</label>
-                        <input type="text" id="year" name="year" value="2024">
+                        <input type="text" id="year" name="creationDate[year]" value="2024">
                     </div>
                 </div>
             </div>
@@ -138,10 +138,20 @@
                 </label>
             </div>
         </div>    
+
+         {{!-- <div class="row">
+            <div class="input-field">
+                <input type="text" id="plan" name="plan">
+                <label for="plan">
+                    Plan &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(A promised result of accomplishing goal)</span>
+                </label>
+            </div>
+        </div>    --}}
         
         <div class="row">
             <div class="input-field">
-                <h6>
+                <h6 class="mini-header">
                     Plan &nbsp;&nbsp;&nbsp;
                     <span class="guidance">(Planned steps needed to accomplish goal)</span>
                 </h6>
@@ -149,9 +159,19 @@
             </div>
         </div>
 
+        {{!-- <div class="row">
+            <div class="input-field">
+                <input type="text" id="action" name="action">
+                <label for="action">
+                    Action &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(A promised result of accomplishing goal)</span>
+                </label>
+            </div>
+        </div>  --}}
+
         <div class="row">
             <div class="input-field">
-                <h6>
+                <h6 class="mini-header">
                     Action &nbsp;&nbsp;&nbsp;
                     <span class="guidance">(Steps taken to accomplish goal)</span>
                 </h6>
@@ -159,9 +179,19 @@
             </div>
         </div>
 
+        {{!-- <div class="row">
+            <div class="input-field">
+                <input type="text" id="victory" name="victory">
+                <label for="victory">
+                    Victory &nbsp;&nbsp;&nbsp;
+                    <span class="guidance">(A promised result of accomplishing goal)</span>
+                </label>
+            </div>
+        </div>   --}}
+
         <div class="row">
             <div class="input-field">
-                <h6>
+                <h6 class="mini-header">
                     Victory &nbsp;&nbsp;&nbsp;
                     <span class="guidance">(Good things that have happened while striving for goal)</span>
                 </h6>
@@ -172,8 +202,8 @@
         <div class="row">
             <div class="input-field blue-arrow">
                 <select id="status" name="status">
-                    <option value="private" selected>Private</option>
-                    <option value="public">Public</option>
+                    <option value="Private" selected>Private</option>
+                    <option value="Public">Public</option>
                 </select>
                 <label for="status">
                     Status &nbsp;&nbsp;&nbsp;
