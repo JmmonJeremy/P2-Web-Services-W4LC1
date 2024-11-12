@@ -14,8 +14,7 @@ routes.get('/add', ensureAuth, (req, res) => {
 // @desc    Process add form
 // @route   POST /creationGoals
 routes.post('/', ensureAuth, async (req, res) => {
-  try {
-    console.log('$$$$$$$$$$$$$$$$$$$$ CreationGoal model:', CreationGoal);
+  try {   
     req.body.user = req.user.id
     await CreationGoal.create(req.body)    
     res.redirect('/dashboard')
@@ -28,8 +27,7 @@ routes.post('/', ensureAuth, async (req, res) => {
 // @desc    Show all creationGoals
 // @route   GET /creationGoals
 routes.get('/', ensureAuth, async (req, res) => {
-  try {
-    console.log("This is what you get:" ,req.user)
+  try {   
     const creationGoals = await CreationGoal.find({ status: 'Public' })
       .populate('user')
       .sort({ createdAt: 'desc' })
@@ -74,12 +72,11 @@ routes.get('/:id', ensureAuth, async (req, res) => {
 
 // @desc    Show edit page
 // @route   GET /creationGoals/edit/:id
-routes.get('/edit/:id', ensureAuth, async (req, res) => {
+routes.get('/edit/:id', ensureAuth, async (req, res) => {  
   try {
     const creationGoal = await CreationGoal.findOne({
       _id: req.params.id,
     }).lean()
-
     if (!creationGoal) {
       return res.render('error/404')
     }
@@ -165,7 +162,7 @@ routes.get('/user/:userId', ensureAuth, async (req, res) => {
 
     res.render('creationGoals/index', {
       back: "/creationGoals",
-      heading: `for ${user.displayName}`,
+      heading: `by ${user.displayName}`,
       creationGoals,
     })
   } catch (err) {

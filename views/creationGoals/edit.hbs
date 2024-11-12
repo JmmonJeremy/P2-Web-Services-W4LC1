@@ -1,7 +1,7 @@
 {{!--  // google auth  --}}
 <h3>Edit CreationGoal</h3>
 <div class="row">
-    <form action="/creationGoals/:{{creationGoal._id}}" method="POST" class="col s12" id="goalCreationForm">
+    <form action="/creationGoals/{{creationGoal._id}}" method="POST" class="col s12" id="goalCreationForm">
         {{!-- Used to replace POST with PUT recognizing name of _method through method-override --}}
         <input type="hidden" name="_method" value="PUT">
         <div class="row optional-row indent">           

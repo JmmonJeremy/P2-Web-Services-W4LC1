@@ -344,10 +344,11 @@ h4.required-input {
 
 .login-box { 
   border-radius: 40px;
-  height: 530px;
+  height: fit-content;
   width: 380px;  
   margin-top: 250px;
-  text-align: center;   
+  text-align: center; 
+  background-color:aliceblue;  
 }
 
 .github-login {

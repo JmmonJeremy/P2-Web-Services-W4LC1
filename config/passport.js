@@ -51,7 +51,7 @@ module.exports = function (passport) {
         try {
           // Find or create the user based on the Google profile
           let user = await User.findOne({ googleId: profile.id });
-          console.log('Received accessToken After Finding User:', accessToken);
+          // console.log('Received accessToken After Finding User:', accessToken);
           if (user) {
             return done(null, user);
           } else {
@@ -62,11 +62,11 @@ module.exports = function (passport) {
               lastName: profile.name.familyName,
               image: profile.photos[0].value,
             });
-            console.log('Received accessToken After Creating User:', accessToken);
+            // console.log('Received accessToken After Creating User:', accessToken);
             return done(null, user);
           }
         } catch (err) {
-          console.log('Received accessToken in Catching error:', accessToken);
+          // console.log('Received accessToken in Catching error:', accessToken);
           return done(err, null);
         }
       }
@@ -76,12 +76,12 @@ module.exports = function (passport) {
   // from https://www.passportjs.org/tutorials/google/session/ 
   // done was used to replace cb (short fro callback) in the code
   passport.serializeUser((user, done) => {
-    console.log('Serializing user:', user);
+    // console.log('Serializing user:', user);
     done(null, user.id)
   });
 
   passport.deserializeUser(async (id, done) => {
-    console.log('Deserializing user with id:', id);
+    // console.log('Deserializing user with id:', id);
     try {
       const user = await User.findById(id); // Use await to handle the promise
       done(null, user);

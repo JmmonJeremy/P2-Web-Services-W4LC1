@@ -5,8 +5,7 @@ module.exports = (mongoose) => {
   const CreationGoalSchema = new mongoose.Schema(
       {
         creationNumber: { 
-          type: Number, 
-          unique: true 
+          type: Number
         },
         creationDate: { 
           type: Date, 
@@ -58,41 +57,46 @@ module.exports = (mongoose) => {
       { timestamps: true }
     );
 
-  // Apply the auto-increment plugin
-  // CreationGoalSchema.plugin(AutoIncrement(mongoose), { inc_field: 'creationNumber' });
   // Pre-save hook to set creationNumber and ensure creationDate is in the correct format
   CreationGoalSchema.pre('save', async function (next) {
     try {
       let potentialNumber;
-  
-      // Check if a creationNumber is provided
-      if (this.creationNumber) {
-        potentialNumber = this.creationNumber;
-  
-        // Check if the provided creationNumber exists in the database
-        let exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber });
-  
-        if (exists) {
-          // If the provided number exists, calculate count + 1 as the fallback
-          const count = await mongoose.model('CreationGoal').countDocuments();
-          potentialNumber = count + 1;
-        }
+
+      // Ensure user is provided
+      if (!this.user) {
+        return next(new Error('User is required for creationGoal.'));
+      }
+
+      // Get all creationNumbers for the user and sort them
+      const existingCreationNumbers = await mongoose.model('CreationGoal')
+        .find({ user: this.user })
+        .sort({ creationNumber: 1 })
+        .select('creationNumber');
+
+      // If the user has no creationGoals, the starting number is 1
+      if (existingCreationNumbers.length === 0) {
+        potentialNumber = 1;
       } else {
-        // No creationNumber provided, calculate count + 1 directly
-        const count = await mongoose.model('CreationGoal').countDocuments();
-        potentialNumber = count + 1;
+        // Find the smallest gap in the creation numbers
+        let number = 1;
+        for (let i = 0; i < existingCreationNumbers.length; i++) {
+          if (existingCreationNumbers[i].creationNumber !== number) {
+            break;
+          }
+          number++;
+        }
+        potentialNumber = number; // The next available number
       }
   
-      // Now check if potentialNumber (whether calculated or fallback) exists
-      let exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber });
+      // Now check if the calculated potentialNumber exists for this user
+      let exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber, user: this.user });
       while (exists) {
-        // If the calculated or fallback number exists, increment until a unique number is found
-        potentialNumber += 1;
-        exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber });
+        potentialNumber++; // Increment until a unique number is found
+        exists = await mongoose.model('CreationGoal').findOne({ creationNumber: potentialNumber, user: this.user });
       }
-  
+
       // Assign the unique number to this.creationNumber
-      this.creationNumber = potentialNumber;
+      this.creationNumber = potentialNumber;      
   
       // Handle the creationDate similarly
       if (this.creationDate && typeof this.creationDate === 'string') {

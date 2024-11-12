@@ -21,8 +21,8 @@
         <tr>
             <td class="btm-bdr-yellow">{{creationNumber}}</td>
             <td class="btm-bdr-yellow">{{formatDate creationDate 'MMMM Do YYYY, h:mm:ss a'}}</td>            
-            <td class="btm-bdr-yellow"><a class="goal-link" href="/creationGoals/{{_id}}">{{goal}}</a></td>
-            <td class="btm-bdr-yellow">{{plan}}</td>
+            <td class="btm-bdr-yellow"><a class="goal-link" href="/creationGoals/{{_id}}">{{truncate goal 50}}</a></td>
+            <td class="btm-bdr-yellow">{{stripTags (truncate plan 35)}}</td>
             
             
             <td class="btm-bdr-yellow"><span class="dash-status">{{status}}</span></td>

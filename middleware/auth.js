@@ -5,10 +5,9 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 module.exports = {
   ensureAuth: function (req, res, next) {
-    console.log(`HEADER-auth: ${JSON.stringify(req.headers, null, 2)}`)
-    console.log('User from OAuth:', req.user);  // Verify that the user object is attached to the request
-    if (req.isAuthenticated()) {
-      console.log("TisAuthentication");
+    // console.log(`HEADER-auth: ${JSON.stringify(req.headers, null, 2)}`)
+    // console.log('User from OAuth:', req.user);  // Verify that the user object is attached to the request
+    if (req.isAuthenticated()) {     
       return next();
     } else {
       res.redirect('/')

@@ -12,14 +12,11 @@ routes.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 // @route   GET /auth/google/callback
 routes.get(
   '/google/callback',
-  (req, res, next) => {
-    console.log('Reached Google callback');
+  (req, res, next) => {  
     next();
   },
   passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    console.log('Authentication successful');
-    console.log('User authenticated:', req.user); // Check the user object
+  (req, res) => {  
     res.redirect('/dashboard');
   }
 )

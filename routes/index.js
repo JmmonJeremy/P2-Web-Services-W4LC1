@@ -10,7 +10,7 @@ const dashboard = require('./dashboard'); // google auth
 const creationGoals = require('./creationGoals'); // google auth 
 const { ensureAuth, ensureGuest } = require('../middleware/auth') // google auth 
 
-// google auth 
+// google auth BASE/HOME/PAGE
 //  @desc   Login/Landing page
 //  @route  GET /
 routes.get('/', ensureGuest, (req, res) => {
