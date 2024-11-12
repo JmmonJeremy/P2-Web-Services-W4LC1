@@ -9,6 +9,7 @@ const passport = require('passport'); // google auth
 const session = require('express-session'); // google auth
 const { engine } = require('express-handlebars'); // google auth (for versions v6 on) 
 const MongoStore = require('connect-mongo'); // google auth 
+const methodOverride = require('method-override')
 
 const connectDB = require('./config/db'); // google auth database add-on
 const swaggerDocument = require('./swagger.json');
@@ -18,6 +19,16 @@ const app = express();
 // Body parser
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+
+// Method override from: https://www.npmjs.com/package/method-override
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    let method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
 
 // google auth 
 // Load config ***This is necessary to use the config.env file instead of .env file
@@ -51,13 +62,20 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // google auth
+// Set global variable
+app.use(function(req, res, next) {  
+  res.locals.user = req.user || null; //used for editIcon function
+  next();
+})
+
+// google auth
 // Handlebars Helpers
-const { formatDate, stripTags, truncate, editIcon } = require('./helpers/hbs');
+const { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear } = require('./helpers/hbs');
 
 // google auth
 // Handlebars    (Order #4)(OLD ORDER #7)
 // app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'})); // google auth (for versions below v6)
-app.engine('.hbs', engine({ helpers: { formatDate, stripTags, truncate, editIcon }, defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
+app.engine('.hbs', engine({ helpers: { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear }, defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
 app.set('view engine', '.hbs');
 
 // CORS setup    (Order #5)(OLD ORDER #2)

@@ -29,13 +29,14 @@ routes.post('/', ensureAuth, async (req, res) => {
 // @route   GET /creationGoals
 routes.get('/', ensureAuth, async (req, res) => {
   try {
+    console.log("This is what you get:" ,req.user)
     const creationGoals = await CreationGoal.find({ status: 'Public' })
       .populate('user')
       .sort({ createdAt: 'desc' })
       .lean()
-
     res.render('creationGoals/index', {
       creationGoals,
+      loggedUser: req.user, // Pass the logged-in user here
     })
   } catch (err) {
     console.error(err)
@@ -70,19 +71,19 @@ routes.get('/:id', ensureAuth, async (req, res) => {
 // @route   GET /creationGoals/edit/:id
 routes.get('/edit/:id', ensureAuth, async (req, res) => {
   try {
-    const creation = await CreationGoal.findOne({
+    const creationGoal = await CreationGoal.findOne({
       _id: req.params.id,
     }).lean()
 
-    if (!creation) {
+    if (!creationGoal) {
       return res.render('error/404')
     }
 
-    if (creation.user != req.user.id) {
+    if (creationGoal.user != req.user.id) {
       res.redirect('/creationGoals')
     } else {
       res.render('creationGoals/edit', {
-        creation,
+        creationGoal,
       })
     }
   } catch (err) {

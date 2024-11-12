@@ -15,31 +15,33 @@
         </form>  
     </li>   
 </ul>
-<div class="row">
+<div class="row public-container">
     {{#each creationGoals}}
-    <div class="col s12 m4">
+    <div class="col s12 m4 public-creationGoals">
         <div class="card">
-            <div class="card-image">
-                {{{user.firstName}}}
-                {{!-- {{{editIcon user ../user _id}}} --}}
+            <div class="card-image">                           
+                {{{editIcon user ../user _id}}}
             </div>
-            <div class="card-content center-align">
+            <div class="card-content center-align public-table">
               <table>
-                <tr> <th>#</th> <th>Date</th> <th>Goal</th> </tr> 
+                <tr> <th>#</th> <th>Date</th> <th>Goal</th> </tr>              
                 <tr> <td>{{creationNumber}}</td> <td>{{formatDate creationDate 'MMMM Do YYYY'}}</td> <td>{{goal}}</td> </tr>
-                <tr> <th>Motivator</th> <td></td> <td>{{motivator}}</td> </tr>
-                <tr> <th>Desire</th> <td></td> <td>{{desire}}</td> </tr>  
-                <tr> <th>Belief</th> <td></td> <td>{{belief}}</td> </tr>
-                <tr> <th>Knowledge</th> <td></td> <td>{{knowledge}}</td> </tr> 
-                <tr> <th>Plan</th> <td></td> <td>{{plan}}</td> </tr>
-                <tr> <th>Action</th> <td></td> <td>{{action}}</td> </tr> 
-                <tr> <th>Victory</th> <td></td> <td>{{victory}}</td> </tr>
-                <tr> <th>Status</th> <td></td> <td>{{goal}}</td> </tr>
-                {{!-- <p>{{stripTags (truncate body 150)}}</p> --}}            
-                <div class="chip">
-                    <img src="{{user.image}}" alt="">
-                    <a href="/creationGoals/user/{{user._id}}">{{user.displayName}}</a>
-                </div>
+              </table>
+              <table>
+                <tr> <th>Motivator</th>  <td>{{motivator}}</td> </tr>
+                <tr> <th>Desire</th>  <td>{{desire}}</td> </tr>               
+                <tr> <th>Belief</th> <td>{{belief}}</td> </tr>
+                <tr> <th>Knowledge</th> <td>{{knowledge}}</td> </tr> 
+                <tr> <th>Plan</th> <td>{{plan}}</td> </tr>
+                <tr> <th>Action</th> <td>{{action}}</td> </tr> 
+                <tr> <th>Victory</th> <td>{{victory}}</td> </tr>
+                <tr> <th>Status</th> <td>{{goal}}</td> </tr>
+                {{!-- <p>{{stripTags (truncate body 150)}}</p> --}} 
+              </table>           
+              <div class="chip">
+                  <img src="{{user.image}}" alt="">
+                  <a href="/creationGoals/user/{{user._id}}">{{user.displayName}}</a>
+              </div>
             </div>
             <div class="card-action center-align">
                 <a href="/creationGoals/{{_id}}" class="btn grey">Read More</a>

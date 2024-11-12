@@ -17,16 +17,6 @@ module.exports = function (passport) {
       async (accessToken, refreshToken, profile, done) => {
         console.log("Access Token:", accessToken);
 
-        //  // Step 1: Create an OAuth2Client instance
-        //  const ticket = await client.verifyIdToken({
-        //   idToken: accessToken, // Pass the access token to fetch the ID token
-        //   audience: process.env.GOOGLE_CLIENT_ID, // The expected client ID
-        // });
-        
-        // // Step 2: Get the ID token payload
-        // const payload = ticket.getPayload();
-        // console.log('ID Token Payload:', payload);  // This is the ID token
-
         const newUser = {
           googleId: profile.id,
           displayName: profile.displayName,
