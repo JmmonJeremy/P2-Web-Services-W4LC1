@@ -1,3 +1,4 @@
+{{!--  // google auth  --}}
 <h1>CreationGoals</h1>
 <ul class="search-form">
     <li>    
@@ -5,37 +6,41 @@
             <div class="input-group">
                     <i class="fas fa-search fa-large" ></i>
                     <div class="unclosed-field">
-                    <input id="search" type="search" name='query' placeholder="Search by goal">
+                    <input id="search" type="search" name='query' placeholder="&nbsp; &nbsp; Search by goal" class="search">
                     <label class="label-icon" for="search">
                     </label>
+                    
                  </div>
-                <button type="submit" class="input-group-addon btn">search</button>
+                 <div class="padding"></div>
+                <button type="submit" class="input-group-addon btn search">search</button>
             </div>
 
         </form>  
     </li>   
 </ul>
-<div class="row public-container">
+<div class="row">
     {{#each creationGoals}}
-    <div class="col s12 m4 public-creationGoals">
-        <div class="card">
+    <div class="col s12 m4">
+        <div class="card public-card">
             <div class="card-image">                           
                 {{{editIcon user ../user _id}}}
             </div>
-            <div class="card-content center-align public-table">
+            <div class="card-content center-align">
               <table>
-                <tr> <th>#</th> <th>Date</th> <th>Goal</th> </tr>              
-                <tr> <td>{{creationNumber}}</td> <td>{{formatDate creationDate 'MMMM Do YYYY'}}</td> <td>{{goal}}</td> </tr>
+                <tr> 
+                    <th>Number</th> <td>{{creationNumber}} &nbsp; &nbsp; </td> <th>Date</th> <td>{{formatDate creationDate 'MM/DD/YYYY'}}</td>
+                </tr>
               </table>
-              <table>
-                <tr> <th>Motivator</th>  <td>{{motivator}}</td> </tr>
-                <tr> <th>Desire</th>  <td>{{desire}}</td> </tr>               
-                <tr> <th>Belief</th> <td>{{belief}}</td> </tr>
-                <tr> <th>Knowledge</th> <td>{{knowledge}}</td> </tr> 
-                <tr> <th>Plan</th> <td>{{plan}}</td> </tr>
-                <tr> <th>Action</th> <td>{{action}}</td> </tr> 
-                <tr> <th>Victory</th> <td>{{victory}}</td> </tr>
-                <tr> <th>Status</th> <td>{{goal}}</td> </tr>
+              <table class="sm-view">
+                <tr> <th>Goal</th>  <td>{{truncate goal 35}}</td> </tr>
+                <tr> <th>Motivator</th>  <td>{{truncate motivator 35}}</td> </tr>
+                <tr> <th>Desire</th>  <td>{{truncate desire 35}}</td> </tr>               
+                <tr> <th>Belief</th> <td>{{truncate belief 35}}</td> </tr>
+                <tr> <th>Knowledge</th> <td>{{truncate knowledge 35}}</td> </tr> 
+                <tr> <th>Plan</th> <td>{{stripTags (truncate plan 35)}}</td> </tr>
+                <tr> <th>Action</th> <td>{{stripTags (truncate action 35)}}</td> </tr> 
+                <tr> <th>Victory</th> <td>{{stripTags (truncate victory 35)}}</td> </tr>
+                <tr> <th>Status</th> <td>{{status}}</td> </tr>
                 {{!-- <p>{{stripTags (truncate body 150)}}</p> --}} 
               </table>           
               <div class="chip">
@@ -43,7 +48,7 @@
                   <a href="/creationGoals/user/{{user._id}}">{{user.displayName}}</a>
               </div>
             </div>
-            <div class="card-action center-align">
+            <div class="card-action center-align public-card-btm">
                 <a href="/creationGoals/{{_id}}" class="btn grey">Read More</a>
             </div>
         </div>

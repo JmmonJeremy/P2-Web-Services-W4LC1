@@ -48,17 +48,17 @@ routes.get('/', ensureAuth, async (req, res) => {
 // @route   GET /creationGoals/:id
 routes.get('/:id', ensureAuth, async (req, res) => {
   try {
-    let creation = await CreationGoal.findById(req.params.id).populate('user').lean()
+    let creationGoal = await CreationGoal.findById(req.params.id).populate('user').lean()
 
-    if (!creation) {
+    if (!creationGoal) {
       return res.render('error/404')
     }
 
-    if (creation.user._id != req.user.id && creation.status == 'private') {
+    if (creationGoal.user._id != req.user.id && creationGoal.status == 'private') {
       res.render('error/404')
     } else {
       res.render('creationGoals/show', {
-        creation,
+        creationGoal,
       })
     }
   } catch (err) {
@@ -96,16 +96,16 @@ routes.get('/edit/:id', ensureAuth, async (req, res) => {
 // @route   PUT /creationGoals/:id
 routes.put('/:id', ensureAuth, async (req, res) => {
   try {
-    let creation = await CreationGoal.findById(req.params.id).lean()
+    let creationGoal = await CreationGoal.findById(req.params.id).lean()
 
-    if (!creation) {
+    if (!creationGoal) {
       return res.render('error/404')
     }
 
-    if (creation.user != req.user.id) {
+    if (creationGoal.user != req.user.id) {
       res.redirect('/creationGoals')
     } else {
-      creation = await CreationGoal.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      creationGoal = await CreationGoal.findOneAndUpdate({ _id: req.params.id }, req.body, {
         new: true,
         runValidators: true,
       })
@@ -122,13 +122,13 @@ routes.put('/:id', ensureAuth, async (req, res) => {
 // @route   DELETE /creationGoals/:id
 routes.delete('/:id', ensureAuth, async (req, res) => {
   try {
-    let creation = await CreationGoal.findById(req.params.id).lean()
+    let creationGoal = await CreationGoal.findById(req.params.id).lean()
 
-    if (!creation) {
+    if (!creationGoal) {
       return res.render('error/404')
     }
 
-    if (creation.user != req.user.id) {
+    if (creationGoal.user != req.user.id) {
       res.redirect('/creationGoals')
     } else {
       await CreationGoal.deleteOne({ _id: req.params.id })
@@ -144,15 +144,15 @@ routes.delete('/:id', ensureAuth, async (req, res) => {
 // @route   GET /creationGoals/user/:userId
 routes.get('/user/:userId', ensureAuth, async (req, res) => {
   try {
-    const creations = await CreationGoal.find({
+    const creationGoals = await CreationGoal.find({
       user: req.params.userId,
-      status: 'public',
+      status: 'Public',
     })
       .populate('user')
       .lean()
 
     res.render('creationGoals/index', {
-      creations,
+      creationGoals,
     })
   } catch (err) {
     console.error(err)
@@ -164,11 +164,11 @@ routes.get('/user/:userId', ensureAuth, async (req, res) => {
 //@route GET /creationGoals/search/:query
 routes.get('/search/:query', ensureAuth, async (req, res) => {
   try{
-      const creations = await CreationGoal.find({title: new RegExp(req.query.query,'i'), status: 'public'})
+      const creationGoals = await CreationGoal.find({goal: new RegExp(req.query.query,'i'), status: 'Public'})
       .populate('user')
       .sort({ createdAt: 'desc'})
       .lean()
-     res.render('creationGoals/index', { creations })
+     res.render('creationGoals/index', { creationGoals })
   } catch(err){
       console.log(err)
       res.render('error/404')

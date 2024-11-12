@@ -9,10 +9,10 @@ const Creation = require('../models/CreationGoal');
 //  @route  GET /dashboard
 routes.get('/', ensureAuth, async (req, res) => { 
   try {
-    const goalCreations = await Creation.find({ user: req.user.id }).lean()
+    const creationGoals = await Creation.find({ user: req.user.id }).lean()
     res.render('dashboard', {
       name: `${req.user.firstName} ${req.user.lastName}`,
-      goalCreations,
+      creationGoals,
     });
   } catch (error) {
     console.error(error);

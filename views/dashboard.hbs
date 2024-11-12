@@ -2,7 +2,7 @@
 <h5 class="pg-header">Dashboard</h5>
 <h3 class="welcome">Welcome {{name}}</h3>
 <h6 class="mini-header">Here are your goal creatioins:</h6>
-{{#if goalCreations}}
+{{#if creationGoals}}
 <table class="striped">
     <thead class="btm-bdr-yellow">
         <tr>
@@ -15,21 +15,22 @@
         </tr>
     </thead>
     <tbody>
-        {{#each goalCreations}}
+        {{#each creationGoals}}
         <tr>
             <td class="btm-bdr-yellow">{{creationNumber}}</td>
             <td class="btm-bdr-yellow">{{formatDate creationDate 'MMMM Do YYYY, h:mm:ss a'}}</td>            
-            <td class="btm-bdr-yellow"><a class="goal-link" href="/goalCreations/{{_id}}">{{goal}}</a></td>
+            <td class="btm-bdr-yellow"><a class="goal-link" href="/creationGoals/{{_id}}">{{goal}}</a></td>
             <td class="btm-bdr-yellow">{{plan}}</td>
             
             
             <td class="btm-bdr-yellow"><span class="dash-status">{{status}}</span></td>
             <td class="btm-bdr-yellow">
-                <a href="/goalCreations/edit/{{_id}}" class="btn btn-float">
+                <a href="/creationGoals/edit/{{_id}}" class="btn btn-float">
                     <i class="fas fa-edit"></i>
                 </a>
 
-                <form action="/goalCreations/{{_id}}" method="POST" id="delete-form">
+                <form action="/creationGoals/{{_id}}" method="POST" id="delete-form" class="inline-form">
+                    {{!-- Used to replace POST with DELETE recognizing name of _method through method-override --}}
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn red">
                         <i class="fas fa-trash"></i>

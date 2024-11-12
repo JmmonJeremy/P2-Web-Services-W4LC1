@@ -30,6 +30,43 @@ a.goal-link {
   font-weight: bold;
 }
 
+table.lg-view {
+  font-size: 1.5rem;
+}
+
+table.sm-view {
+  font-size: 0.75rem;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0;
+}
+
+input.search {  
+  background: linear-gradient(to right, black, rgb(101, 177, 198));
+  color: white; /* Ensures text is visible on dark background */
+  border-radius: 10px !important; /* Optional: Adds rounded corners */
+  padding: 5px; /* Optional: Adds padding inside the input */
+  border: none; /* Optional: Removes border for a cleaner look */
+  /* Add white glow to the bottom edge only */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.8) !important;  /* Bottom edge glow */
+}
+
+button.search {
+  margin-left: 2.5rem !important; 
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.8); /* Yellow glow */
+ 
+  text-shadow: 
+  -1px -1px 0 #FFFF00,  /* Top-left shadow */
+  1px -1px 0 #FFFF00,   /* Top-right shadow */
+  -1px 1px 0 #FFFF00,   /* Bottom-left shadow */
+  1px 1px 0 #FFFF00;    /* Bottom-right shadow */
+  letter-spacing: 5px; /* Adjust the value to control the space */
+}
+
+div.padding {
+  width: 1px;
+}
+
 /* Right-align the inputs */
 .right-aligned-inputs {
   display: flex;
@@ -62,19 +99,13 @@ span.guidance,
   color: blue;
 }
 
-div.public-container{
-  /* display: flex;
-  flex-direction: row; */
-  /* background-color: blue; */
+div.public-card {
+  border-radius: 2rem !important;
+  margin-bottom: 2rem; 
 }
 
-div.public-creationGoals {
-  /* display: flex; */
-  /* border: red solid 1rem !important; */
-}
-
-.public-table {
-  /* border: brown solid 1rem !important; */
+div.public-card-btm {
+  border-radius: 0 0 2rem 2rem !important;
 }
 
 .c-num input {
@@ -293,10 +324,16 @@ h4.required-input {
   background: linear-gradient(0deg, rgba(71, 43, 186, 1) 0%, rgba(44, 25, 121, 1) 100%);
 }
 
-/* .btn-float {   //google-auth-builtin style
-  float: left;
-  margin-right: 10px;
-} */
+/* added to put edit & delete buttons side by side */
+.btn-float {   /* google-auth-builtin style */
+  /*float: left;   didn't work replaced with .inline-form below */
+  margin-right: 10px; 
+}
+
+/* added to put edit & delete buttons side by side */
+.inline-form {
+  display: inline;
+}
 
 .btn {
   border-radius: 20px;
@@ -307,9 +344,9 @@ h4.required-input {
   height: 160px;
 }
 
-/* .img-small {  //google-auth-builtin style
+.img-small {  /* google-auth-builtin style */
   width: 180px;
-} */
+}
 
 .fa-large {  /* google-auth-builtin style */
   font-size: 26px !important;
@@ -324,6 +361,15 @@ h4.required-input {
   margin-top: 50px;
   text-align: center;
 } */
+
+.show-content {
+  position: relative;
+}
+
+.edit-icon-wrapper {
+  position: absolute; 
+  right: 370px; /* Adjust as needed */
+}
 
 /* CKEDITOR STYLING *********************************************************************************/
 
