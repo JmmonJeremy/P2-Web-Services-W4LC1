@@ -65,17 +65,18 @@ if (process.env.NODE_ENV === 'development') {
 // Set global variable
 app.use(function(req, res, next) {  
   res.locals.user = req.user || null; //used for editIcon function
+  res.locals.req = req; // Make `req` accessible in all Handlebars templates
   next();
 })
 
 // google auth
 // Handlebars Helpers
-const { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear } = require('./helpers/hbs');
+const { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear, goBack } = require('./helpers/hbs');
 
 // google auth
 // Handlebars    (Order #4)(OLD ORDER #7)
 // app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'})); // google auth (for versions below v6)
-app.engine('.hbs', engine({ helpers: { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear }, defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
+app.engine('.hbs', engine({ helpers: { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear, goBack }, defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
 app.set('view engine', '.hbs');
 
 // CORS setup    (Order #5)(OLD ORDER #2)

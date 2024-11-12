@@ -61,4 +61,8 @@ module.exports = {
     const dateYear = validDate.getFullYear();
     return dateYear;
   },
-}
+  goBack: function() {
+    // This will automatically fetch the Referer from the request headers
+    return this.req.get('Referer') || '/creationGoals'; // Fallback URL if Referer is not available
+  }
+};

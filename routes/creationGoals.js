@@ -34,9 +34,14 @@ routes.get('/', ensureAuth, async (req, res) => {
       .populate('user')
       .sort({ createdAt: 'desc' })
       .lean()
+
+    // Capture the previous URL or set a default if not available
+    const back = req.get('Referer') || "/creationGoals";
+
     res.render('creationGoals/index', {
-      creationGoals,
-      loggedUser: req.user, // Pass the logged-in user here
+      back,
+      heading: ``,
+      creationGoals     
     })
   } catch (err) {
     console.error(err)
@@ -145,13 +150,22 @@ routes.delete('/:id', ensureAuth, async (req, res) => {
 routes.get('/user/:userId', ensureAuth, async (req, res) => {
   try {
     const creationGoals = await CreationGoal.find({
-      user: req.params.userId,
+      user: req.params.userId,      
       status: 'Public',
     })
       .populate('user')
       .lean()
 
+    // Get the user from the first creationGoal (assuming user is populated correctly)
+    const user = creationGoals[0]?.user;
+
+    if (!user) {
+      return res.render('error/404'); // Handle case where user is not found
+    }
+
     res.render('creationGoals/index', {
+      back: "/creationGoals",
+      heading: `for ${user.displayName}`,
       creationGoals,
     })
   } catch (err) {
@@ -164,11 +178,20 @@ routes.get('/user/:userId', ensureAuth, async (req, res) => {
 //@route GET /creationGoals/search/:query
 routes.get('/search/:query', ensureAuth, async (req, res) => {
   try{
-      const creationGoals = await CreationGoal.find({goal: new RegExp(req.query.query,'i'), status: 'Public'})
+      const searchQuery = await req.query.query; // Capture the search term
+      const creationGoals = await CreationGoal.find({goal: new RegExp(searchQuery,'i'), status: 'Public'})
       .populate('user')
       .sort({ createdAt: 'desc'})
       .lean()
-     res.render('creationGoals/index', { creationGoals })
+
+    // Capture the previous URL or set a default if not available
+    const back = req.get('Referer') || "/creationGoals";
+
+    res.render('creationGoals/index', { 
+      back,
+      heading: `Search Results within Goal for "${searchQuery}"`,
+      creationGoals 
+    })
   } catch(err){
       console.log(err)
       res.render('error/404')

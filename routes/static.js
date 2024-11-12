@@ -8,7 +8,7 @@ routes.use(express.static("public"));
 routes.use("/css", express.static(__dirname + "public/css"));
 routes.use("/js", express.static(__dirname + "public/js"));
 routes.use("/images", express.static(__dirname + "public/images"));
-routes.get('/', (req, res) => {
+routes.get('/static', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 
