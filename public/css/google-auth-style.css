@@ -251,6 +251,31 @@ h4.required-input {
   position: relative; /* necessary for placement of top line */
 }
 
+h4.access-denied-message {
+  position: absolute;   /* Position the message outside the normal document flow */
+  top: 120px;               /* Align it at the top of the page */
+  left: 50%;            /* Center horizontally */
+  transform: translateX(-50%);  /* Fine-tune centering */  
+  font-weight: bold;    /* Bold font */
+  padding: 10px;        /* Optional padding around the message */
+}
+
+div.created {
+  position: relative;
+  width: 100%; /* Make sure it covers the screen width */
+  clear: both; /* Ensures floating works correctly */
+}
+
+.flag {
+  color: red;
+  text-shadow:
+  0px 0px 5px rgba(255, 255, 255, 0.8),  /* Smaller inner shadow */
+  0px 0px 10px rgba(255, 255, 255, 0.6), /* Medium shadow */
+  0px 0px 15px rgba(255, 255, 255, 0.4), /* Larger shadow */
+  0px 0px 20px rgba(255, 255, 255, 0.2); /* Largest shadow */
+  z-index: 1000;        /* Ensure it stays on top */
+}
+
 .indent {
   padding-left: 0.85rem; /* Used to align Creation Number in Edit page*/
 }

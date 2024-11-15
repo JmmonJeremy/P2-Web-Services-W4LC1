@@ -4,63 +4,28 @@ const creation = require('./creation');
 const swagger = require('./swagger');
 const oauth = require('./oauth');
 const oauthCallback = require('./oauth-callback');
-const static = require('./static');
 const auth = require('./auth'); // google auth 
 const dashboard = require('./dashboard'); // google auth 
 const creationGoals = require('./creationGoals'); // google auth 
-const { ensureAuth, ensureGuest } = require('../middleware/auth') // google auth 
+const { ensureGuest } = require('../middleware/auth'); // google auth 
 
 // google auth BASE/HOME/PAGE
 //  @desc   Login/Landing page
 //  @route  GET /
 routes.get('/', ensureGuest, (req, res) => {
-  res.render('login', {
-      layout: 'login',
-  })
-})
+  try {  
+    const accessDenied = req.query.accessDenied === 'true';  // Check if 'accessDenied' is true in the query
+    res.status(accessDenied ? 401 : 200).render('login', {
+        layout: 'login',
+        accessDenied, // Pass accessDenied flag to the view
+    })
+  } catch (error) {
+    console.error(error);
+    res.status(500).render('error/500')
+  }
+});
 
-// google auth 
-//  @desc   Dashboard
-//  @route  GET /dashboard
-// routes.get('/dashboard', ensureAuth, (req, res) => { 
-//   res.render('dashboard', {
-//     name: req.user.firstName,
-//   });
-// })
 
-// See https://swagger-autogen.github.io/docs/swagger-2/schemas-and-definitions under @schema section for guidance
-// routes.get('/', (req, res) => {
-//   /* #swagger.description = "Welcome to the Goal Creation API" */
-//   /* #swagger.responses[200] = { 
-//         description: "Successfully Loaded Welcome", 
-//         '@schema': { 
-//              "type": "object",
-//             "properties": {
-//               "welcome": {
-//                 "type": "string",
-//                 "example": "Welcome to the Place that Turns Your Goals into Victorious Creations"
-//                 } 
-//               } 
-//             } 
-//           } 
-//         }    
-//   */ 
-//  try {
-//   // res.redirect(
-//   //   `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}`,
-//   // );
-//   console.log("GET / route handler is being hit");
-//   const docData = 'Welcome to the Place that Turns Your Goals into Victorious Creations!';
-//   res.send(docData);
-//  } catch (error) {
-//   res.status(500).send({
-//     message:
-//       error.message || 'An error occurred while processing the request.',
-//   });
-//  }
-// });
-
-routes.use('/', static)
 routes.use('/', oauth)
 routes.use('/', oauthCallback)
 routes.use('/', swagger);

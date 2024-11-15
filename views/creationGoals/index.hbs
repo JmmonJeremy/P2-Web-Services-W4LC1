@@ -23,6 +23,7 @@
 </ul>
 <div class="row">
     {{#each creationGoals}}
+    {{log _id goal user.displayName}} <!-- This will log each creationGoal._id individually -->
     <div class="col s12 m4">
         <div class="card public-card">
             <div class="card-image">                           

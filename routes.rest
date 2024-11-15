@@ -1,33 +1,109 @@
+@local
+###
 // LOCALHOST
-// RETRIEVING WITH GET
-###
-// getting the API docs from Swagger
-GET http://localhost:3000/api-docs
-###
-// getting homepage info
+// OAUTH 2.0 PROCESS ###
+### getting homepage/login page ###
 GET http://localhost:3000/
-Authorization: Bearer ya29.a0AeDClZBrhT6iQAArZzbetvDHqMcA6JUT43izL4qwi3FVC_8gmcYRC1cUpBPPzMv4QXW56tFTbL17pJJmLqZ7ilsoDEqro7q6tYOqpOcdalkmTlNsJC2W9fhPLLbM5T_XQGHkJB93RI8AwDvFX-_PUHRY9BpugvPpclYJeNqkaCgYKAd8SARISFQHGX2Mii611J--7suG8_9vmKAdhxQ0175
-###
-// getting list of all profiles (ordered by username alphabetically)
-GET http://localhost:3000/profiles
-Content-Type: application/json
-###
-// getting list of all profiles (ordered by username alphabetically)
-GET http://localhost:3000/creations
-Content-Type: application/json
-###
-// getting 1 profile by username
-GET http://localhost:3000/profiles/Jmmon
-Content-Type: application/json
-###
-// getting 1 creation by creationNumber
-GET http://localhost:3000/creations/1
-Content-Type: application/json
-###
-// ALTERING A PROFILE WITH PUT
-PUT http://localhost:3000/profiles/DemoMan HTTP/1.1 
-Content-Type: application/json
+### start GitHub OAuth login
+GET http://localhost:3000/auth/github
+### getting the Access Token
+https://github.com/login/oauth/authorize?client_id=Ov23libFgCKI6dSQVH0n&redirect_uri=/http://localhost:3000/github/callback&scope=user:email
 
+
+> {% response %}
+### Exchange Authorization Code for Access Token
+POST https://github.com/login/oauth/access_token
+Content-Type: application/json
+Accept: application/json
+
+{
+  "client_id": "{{ GITHUB_CLIENT_ID }}",
+  "client_secret": "{{ GITHUB_CLIENT_SECRET }}",
+  "code": "c2826ab0978d2f42a171",
+  "redirect_uri": "http://localhost:3000/github/callback"
+}
+
+> {% response %}
+// RETRIEVING SWAGGER DOCUMENTATION ###
+### getting the API docs from SWAGGER ###
+GET http://localhost:3000/api-docs
+// RETRIEVING WITH GET FOR CREATIONGOALS ###
+### getting dashboard list of all a user's creationGoals
+GET http://localhost:3000/dashboard
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+### getting list of all creationGoals for a user
+GET http://localhost:3000/creationGoals
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+### getting 1 CreationGoal Belonging to User or other that is Public
+GET http://localhost:3000/creationGoals/672fda3b0108c2517176864d
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+### getting 1 CreationGoal Belonging to User
+GET http://localhost:3000/creationGoals/user/672fda3b0108c2517176864d
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+### getting all CreationGoals of that User that match the search within goals
+GET http://localhost:3000/creationGoals/search/WIN
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+### getting page to create a CreationGoal
+GET http://localhost:3000/creationGoals/add
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+### getting 1 CreationGoal Belonging to User to edit
+GET http://localhost:3000/creationGoals/edit/672fda3b0108c2517176864d
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+// ALTERING DATA IN THE DATABASE
+### Creating a creationGoal 
+POST http://localhost:3000/creationGoals/672fda3b0108c2517176864d
+Content-Type: application/json
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+
+{
+  "creationNumber": 10,
+  "creationDate": "9/10/24",
+  "goal": "Demonstrate how to post a new Creation Object",
+  "motivator": "I can FANTASTIC for others.",
+  "desire": "To Demonstrate things for others",
+  "belief": "Everyone needs Demonstrations",
+  "knowledge": "People learn by Demonstration",  
+  "plan": "Enter a Post Demonstration",
+  "action": "I saved a Post Demonstration",
+  "victory": "I created a Post Demonstration",
+  "status": "Public",
+  "user": "67332dd875339058d5f9dfc9"  
+}
+### Updating a creationGoal
+PUT http://localhost:3000/creationGoals/67332fdc28f66cc1660489c8
+Content-Type: application/json
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+
+{
+  "creationDate": "9/6/24",
+  "creationNumber": 3,
+  "goal": "DEMO how to post a new Creation Object",
+  "motivator": "I can be a DEMOMAN for others",
+  "desire": "To DEMO things for others",
+  "belief": "Everyone needs DEMOS",
+  "knowledge": "People learn by DEMO",  
+  "plan": "Enter a Post DEMO",
+  "action": "I saved a Post DEMO",
+  "victory": "I created a Post DEMO",
+  "status": "Private",
+  "user": "67332dd875339058d5f9dfc9" 
+}
+### Deleting a creationGoal
+DELETE http://localhost:3000/creationGoals/6736a23718aaeac06e5792df
+Cookie: connect.sid=s:4fw1qEWINXYKt3vqkpdHcSgBF2flF51w.Xn09UuWWseIsWXD/z5+EzS31Aj9/SaQ2IP+m/8aaLgY
+Authorization: Bearer ya29.a0AeDClZATMqX3OQjaTNKnUJEZlpbe5OIqSVady-Q1nohaAxgBqhhiTbGJyL-Iq6RstphAu1H66IiPOIqnOe_TQZri9MbV-ZZLENtUYDYJRwktALdO0c8z-j5waONt5EJNMFLr4PsLioQOweU3plZmt2Aq17OiktVeYI3Uw78FaCgYKAUMSARISFQHGX2Mi_VxxhdfOMqVlKH7hrFpgfQ0175
+// RETRIEVING WITH GET FOR PROFILES
+### getting list of all users
+PUT http://localhost:3000/
 {
   "username": "DemoWoman",
   "motto": "Come what may, and love it.",
@@ -37,26 +113,9 @@ Content-Type: application/json
   "idol": "Mother Teresa"
 }
 ###
-// ALTERING A CREATION WITH PUT
-PUT http://localhost:3000/creations/3 HTTP/1.1 
-Content-Type: application/json
 
-{
-  "creationNumber": 10,
-  "motivator": "I can be a demoWoman for others.",
-  "desire": "To Demonstrate things for others",
-  "belief": "Everyone needs Demonstrations",
-  "knowledge": "People learn by Demonstration",
-  "goal": "Demonstrate how to post a new Creation Object",
-  "plan": "Enter a Post Demonstration",
-  "action": "I saved a Post Demonstration",
-  "victory": "I created a Post Demonstration",
-  "creationDate": "9/10/24"
-}
 ###
-// REMOVING A PROFILE WITH DELETE
-DELETE http://localhost:3000/profiles/DemoWoman HTTP/1.1
-###
+
 // REMOVING A CREATION WITH DELETE
 DELETE http://localhost:3000/creations/10 HTTP/1.1
 ###

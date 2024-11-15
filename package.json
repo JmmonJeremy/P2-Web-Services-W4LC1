@@ -22,7 +22,9 @@
   "homepage": "https://github.com/JmmonJeremy/P2-Web-Services-W4#readme",
   "dependencies": {
     "axios": "^1.7.7",
+    "circular-json": "^0.5.9",
     "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
@@ -36,6 +38,7 @@
     "mongoose-sequence": "^6.0.1",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "passport-google-token": "^0.1.2",
     "swagger-ui-express": "^5.0.1",

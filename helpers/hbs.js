@@ -55,8 +55,7 @@ module.exports = {
     if (isNaN(validDate)) {
       // Return current year if the date is invalid
       return new Date().getFullYear();
-    }
-  
+    }  
     // Otherwise, return the year from the valid date
     const dateYear = validDate.getFullYear();
     return dateYear;
@@ -64,5 +63,18 @@ module.exports = {
   goBack: function() {
     // This will automatically fetch the Referer from the request headers
     return this.req.get('Referer') || '/creationGoals'; // Fallback URL if Referer is not available
+  },
+  log: function(id, title, user) {
+    // Define a maximum length for the title column
+    const maxTitleLength = 30;
+     // Truncate title if it's too long
+    if (title.length > maxTitleLength) {
+      // Truncate and add "..." at the end (3 chars for ellipsis)
+      title = title.substr(0, maxTitleLength - 3) + '...';
+    }
+    // Pad title if it's too short
+    title = title.padEnd(maxTitleLength, ' ');
+    console.log(`${id} |-> "${title}" |-> ${user}`);
+    return "";
   }
 };

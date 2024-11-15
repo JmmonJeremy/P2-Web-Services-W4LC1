@@ -9,8 +9,8 @@ const passport = require('passport'); // google auth
 const session = require('express-session'); // google auth
 const { engine } = require('express-handlebars'); // google auth (for versions v6 on) 
 const MongoStore = require('connect-mongo'); // google auth 
-const methodOverride = require('method-override')
-
+const methodOverride = require('method-override'); // google auth 
+const cookieParser = require('cookie-parser'); // to get REQUIRED cookie for routes.rest requiests
 const connectDB = require('./config/db'); // google auth database add-on
 const swaggerDocument = require('./swagger.json');
 
@@ -19,6 +19,7 @@ const app = express();
 // Body parser
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(cookieParser());
 
 // Method override from: https://www.npmjs.com/package/method-override
 app.use(methodOverride(function (req, res) {
@@ -41,7 +42,7 @@ connectDB(); // google auth database add-on database connection
 // Changing order of Sessions & Passport middleware up to top here fixed not being found
 // Sessions middleware code from: https://www.npmjs.com/package/express-session 
 // Sessions middleware
-console.log('Initializing session middleware...');
+// console.log('Initializing session middleware...');
 app.use(session({
   secret: 'victory-planner',
   resave: false,
@@ -51,9 +52,18 @@ app.use(session({
 
 // google auth   (Order #2)(OLD ORDER #9)
 // Passport middleware
-console.log('Initializing Passport middleware...');
+// console.log('Initializing Passport middleware...');
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Middleware to save accessToken to session
+app.use((req, res, next) => {
+  if (req.user) {
+    req.accessToken = req.user.accessToken;
+    req.user = req.user.user; // redefine req.user to only contain the user object
+  }
+  next();
+});
 
 // google auth
 // Logging       (Order #3)(OLD ORDER #6)
@@ -71,12 +81,12 @@ app.use(function(req, res, next) {
 
 // google auth
 // Handlebars Helpers
-const { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear, goBack } = require('./helpers/hbs');
+const { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear, goBack, log } = require('./helpers/hbs');
 
 // google auth
 // Handlebars    (Order #4)(OLD ORDER #7)
 // app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'})); // google auth (for versions below v6)
-app.engine('.hbs', engine({ helpers: { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear, goBack }, defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
+app.engine('.hbs', engine({ helpers: { formatDate, stripTags, truncate, editIcon, select, getMonth, getDay, getYear, goBack, log }, defaultLayout: 'main', extname: '.hbs' }));  // google auth (for versions v6 on)
 app.set('view engine', '.hbs');
 
 // CORS setup    (Order #5)(OLD ORDER #2)
@@ -90,6 +100,14 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Define your routes         (Order #7)(OLD ORDER #3)
 app.use('/', require('./routes'));  // google auth - uses ./routes/index
 // .use('/auth', require('./routes/auth'));  // google auth - did this in the routes/index.js file
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error("Passport authentication error:", err);
+
+  // Redirect to the custom 401 error page
+  res.render('error/401');
+});
 
 // Catch uncaught exceptions  (Order #8)(OLD ORDER #4)
 process.on('uncaughtException', (err, origin) => {

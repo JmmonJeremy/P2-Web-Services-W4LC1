@@ -1,4 +1,7 @@
 {{!--  // google auth  --}}
+{{#if accessDenied}}     
+            <h4 class="access-denied-message">Access Denied: Please try logging in again.</h4>        
+{{/if}}
 <div class="login-box">
     <img class="img-logo" src="/images/google.svg" />
     <h3><i class="fas fa-trophy"></i> GoalCreations</h3>
@@ -24,7 +27,7 @@
     </div>
     <div class="divider"></div>
     <div class="section">
-        <a href="/oauth" class="btn github-login darken-1">
+        <a href="/auth/github" class="btn github-login darken-1">
             <i class="fab fa-github left"></i> Sign In With GitHub
         </a>
     </div>

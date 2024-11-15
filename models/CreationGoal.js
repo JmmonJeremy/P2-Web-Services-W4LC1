@@ -30,8 +30,7 @@ module.exports = (mongoose) => {
         knowledge: {
           type: String,
           required: true
-        },
-        
+        },        
         plan: {
           type: String,
           required: true

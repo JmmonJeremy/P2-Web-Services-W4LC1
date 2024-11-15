@@ -1,5 +1,6 @@
 // google auth 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 const GoogleTokenStrategy = require('passport-google-token').Strategy; // Import google-token
 const mongoose = require('mongoose');
 const User = require('../models/User');
@@ -13,61 +14,105 @@ module.exports = function (passport) {
         clientID: process.env.GOOGLE_CLIENT_ID,             
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback',
+        failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
       async (accessToken, refreshToken, profile, done) => {
-        console.log("Access Token:", accessToken);
-
+        console.log("GOOGLE Access Token:", accessToken);
+        
+        const email = profile.emails && profile.emails[0].value;
         const newUser = {
           googleId: profile.id,
           displayName: profile.displayName,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
-          image: profile.photos[0].value,        
+          image: profile.photos[0].value,
+          email,  //new for 2     
         }
 
+        // old
+        //   let user = await User.findOne({ googleId: profile.id })
         try {
-          let user = await User.findOne({ googleId: profile.id })         
+          // Check if the user already exists
+          let user = await User.findOne({ email });  //new for 2         
           if (user) {
-            done(null, user)
+            // Update existing user with new Google data if necessary
+            // user = Object.assign(user, newUser);   //new for 2 
+            Object.keys(newUser).forEach((key) => {  //new for 2  
+              if (newUser[key]) user[key] = newUser[key];  //new for 2  
+            });   //new for 2  
+            await user.save();   //new for 2
+            user = { user, accessToken };            
+            done(null, user);
           } else {
-            user = await User.create(newUser)
-            done(null, user)
+            // Create a new user
+            user = await User.create(newUser);
+            user = { user, accessToken };          
+            done(null, user);
           }
         } catch (err) {
-          console.error(err)
+          console.error(err);
+          done(err, null);  //new for 2  
         }
       }
     )
   );
-
-  // New Google Token strategy (for token-based authentication needed for .rest requests)
+  
   passport.use(
-    new GoogleTokenStrategy(
+    new GitHubStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: '/auth/github/callback',
+        failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
       async (accessToken, refreshToken, profile, done) => {
+
+        console.log("GITHUB Access Token:", accessToken);
+        const email = profile.emails && profile.emails[0].value;
+
+        // Split displayName into firstName and lastName based on the first space
+        let firstName = profile.displayName;
+        let lastName = '';
+
+        if (profile.displayName && profile.displayName.includes(' ')) {
+          [firstName, ...lastName] = profile.displayName.split(' ');
+          lastName = lastName.join(' '); // Join any remaining words as last name
+        }
+
+        const newUser = {
+          githubId: profile.id,
+          displayName: profile.displayName,
+          firstName: firstName,
+          lastName: lastName || '', // Use an empty string if no last name is found
+          image: profile.photos && profile.photos[0].value,
+          email,
+          bio: profile._json.bio,
+          location: profile._json.location,
+          company: profile._json.company,
+          website: profile._json.blog, 
+        }
+    
         try {
-          // Find or create the user based on the Google profile
-          let user = await User.findOne({ googleId: profile.id });
-          // console.log('Received accessToken After Finding User:', accessToken);
+          // Check if the user already exists
+          let user = await User.findOne({ email });  //new for 2         
           if (user) {
-            return done(null, user);
+            // Update existing user with new GitHub data if necessary
+            
+            Object.keys(newUser).forEach((key) => {  //new for 2  
+              if (newUser[key]) user[key] = newUser[key];  //new for 2  
+            });   //new for 2  
+            await user.save();   //new for 2 
+            user = { user, accessToken };  
+            done(null, user);
           } else {
-            user = await User.create({
-              googleId: profile.id,
-              displayName: profile.displayName,
-              firstName: profile.name.givenName,
-              lastName: profile.name.familyName,
-              image: profile.photos[0].value,
-            });
-            // console.log('Received accessToken After Creating User:', accessToken);
-            return done(null, user);
+            // Create a new user
+            user = await User.create(newUser);
+            user = { user, accessToken }; 
+            done(null, user);
           }
         } catch (err) {
-          // console.log('Received accessToken in Catching error:', accessToken);
-          return done(err, null);
+          console.error(err);
+          done(err, null);  //new for 2  
         }
       }
     )
@@ -75,18 +120,20 @@ module.exports = function (passport) {
 
   // from https://www.passportjs.org/tutorials/google/session/ 
   // done was used to replace cb (short fro callback) in the code
-  passport.serializeUser((user, done) => {
-    // console.log('Serializing user:', user);
-    done(null, user.id)
+ passport.serializeUser(async (wrappedUser, done) => {
+    // Save only the user ID and accessToken   
+    done(null, { id: wrappedUser.user._id, accessToken: wrappedUser.accessToken });   
   });
 
-  passport.deserializeUser(async (id, done) => {
-    // console.log('Deserializing user with id:', id);
+  passport.deserializeUser(async (sessionData, done) => {  
     try {
-      const user = await User.findById(id); // Use await to handle the promise
-      done(null, user);
+      const user = await User.findById(sessionData.id);
+      if (!user) {
+        return done(new Error("User not found"));
+      }    
+      done(null, { user, accessToken: sessionData.accessToken });
     } catch (err) {
-      done(err, null); // Pass the error to done if there's an issue
+      done(err, null);
     }
-  }); 
+  });
 }
