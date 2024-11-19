@@ -17,6 +17,9 @@ const connectDB = require('./config/db'); // google auth database add-on
 
 const app = express();
 
+// Set trust proxy
+app.set('trust proxy', 1); // Trust the first proxy (required for Render's setup)
+
 const options = {
   swaggerOptions: {
     operationsSorter: (a, b) => {
@@ -107,6 +110,7 @@ app.use(session({
   cookie: {
     secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
     httpOnly: true,  // Prevents access to the cookie via JavaScript (XSS protection)
+    sameSite: 'none',
     maxAge: 24 * 60 * 60 * 1000 // 1 day (adjust if needed)
   }
 }));
