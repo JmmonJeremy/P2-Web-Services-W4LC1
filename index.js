@@ -58,15 +58,7 @@ const options = {
       // Sort by method order (GET, POST, PUT, DELETE)
       const methodOrder = ['get', 'post', 'put', 'delete'];
       return methodOrder.indexOf(methodA) - methodOrder.indexOf(methodB);
-    }
-      
-    // Add custom CSS for descriptions here
-    // customCss: `
-    //   .swagger-ui .opblock-description {
-    //     color: #007BFF;
-    //     font-weight: bold;
-    //   }
-    // `,
+    } 
   },
 };
 
@@ -149,17 +141,7 @@ app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Swagger setup (Order #6)(OLD ORDER #1)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options,
-  // {
-  //   swaggerOptions: {
-  //     requestInterceptor: (req) => {
-  //       req.headers['Authorization'] = `Bearer ${process.env.TOKEN}`;
-  //       req.headers['Cookie'] = `sessionId=${process.env.SESSION_ID}`;
-  //       return req;
-  //     },
-  //   },
-  // }
-));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options, ));
 
 // Define your routes         (Order #7)(OLD ORDER #3)
 app.use('/', require('./routes'));  // google auth - uses ./routes/index
