@@ -240,7 +240,7 @@ exports.updateCreationGoal = async (req, res) => {
   /* #swagger.summary = "UPDATES a creationGoal that has been selected by id with the data entered into the form ---------- (!!!OAUTH PROTECTED ROUTE!!!)" */   
   /* #swagger.description = 'The updated data in the form for the creationGoal changes the database & the user is notified & redirected to the dashboard page.<br><b>OPTIONAL FIELDS Category Titles to Copy & Pate to JSON Body -> "creationNumber":, "creationDate":, & "status":</b>' */      
   // #swagger.responses[200] = { description: 'SUCCESS, PUT updated the selected creationGoal in the database' }
-  // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to PuT the form page that updates the selected creationGoal'}
+  // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to PUT the form page that updates the selected creationGoal'}
   // #swagger.responses[404] = { description: 'The attempted PUT of the specified creationGoal for updating was Not Found'}
   // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to PUT the form page for updating the selected creationGoal'}
   /* #swagger.parameters['id'] = {       
@@ -327,13 +327,13 @@ exports.updateCreationGoal = async (req, res) => {
 
 // The "Delete" method for removing a creationGoal selected by id
 exports.deleteCreationGoal = async (req, res) => {
-  /* #swagger.security = [{ "bearerAuth": [] }] */
-  /* #swagger.summary = "DELETES a creationGoal by its _id ---------- (!!!OAUTH PROTECTED ROUTE!!!)" */ 
-  /* #swagger.description = 'After deletion it returns a success code and redirects to the dashboard page with an alert notification of the successful deletion of the creationGoal.' */
-  // #swagger.responses[200] = { description: 'SUCCESS, the creationGoal was DELETED' }
-  // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to DELETE this creationGoal'}
-  // #swagger.responses[404] = { description: 'The selected creationGoal for DELETION was NOT FOUND'}
-  // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to DELETE all Public creationGoals'}
+    /* #swagger.security = [{ "bearerAuth": [] }] */
+    /* #swagger.summary = "DELETES a creationGoal by its _id ---------- (!!!OAUTH PROTECTED ROUTE!!!)" */ 
+    /* #swagger.description = 'After deletion it returns a success code and redirects to the dashboard page with an alert notification of the successful deletion of the creationGoal.' */
+    // #swagger.responses[200] = { description: 'SUCCESS, the creationGoal was DELETED' }
+    // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to DELETE this creationGoal'}
+    // #swagger.responses[404] = { description: 'The selected creationGoal for DELETION was NOT FOUND'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to DELETE all Public creationGoals'}
   try {
     let creationGoal = await CreationGoal.findById(req.params.id).lean()
     const creationGoals = await CreationGoal.find({ user: req.user.id }).populate('user').lean();

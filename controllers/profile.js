@@ -2,58 +2,58 @@ const db = require('../models');
 const Profile = db.Profile;
 
 exports.findAll = (req, res) => {
-  /* #swagger.summary = "GETS all Profiles" */ 
-  /* #swagger.description = 'All Profiles are displayed on the profiles page.' */ 
-  // #swagger.responses[200] = { description: 'SUCCESS, GET Retrieved all the Profiles' }
-  // #swagger.responses[404] = { description: 'The attempted GET of all Profiles was Not Found'}
-  // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET all Profiles'}
-    Profile.find(
-      {},
-      {
-        username: 1,
-        motto: 1,
-        firstName: 1,
-        middleName: 1,
-        lastName: 1,
-        idol: 1,
-        photo: 1,
-        _id: 0,
-      }
-    )
-      .sort({ username: 1 }) // Sort by name in ascending order
-      .then((data) => {        
-        // Create a new array with ordered objects *additionalInfo* at bottom
-        const orderedData = data.map(profile => ({
-          username: profile.username,
-          motto: profile.motto,
-          firstName: profile.firstName,
-          middleName: profile.middleName,
-          lastName: profile.lastName,
-          idol: profile.idol,
-          photo: profile.photo,
-        }));
-        if (!data)
-        res
-          .status(404)
-          .send({ message: 'No Profiles found! There are either no Profiles yet, or their was an error retrieving them.'});         
-      else res.send(orderedData); // Send the newly ordered data    
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || 'Some error occurred while retrieving profiles.',
-        });
-      }); 
+    /* #swagger.summary = "GETS all Profiles" */ 
+    /* #swagger.description = 'All Profiles are displayed on the profiles page.' */ 
+    // #swagger.responses[200] = { description: 'SUCCESS, GET Retrieved all the Profiles' }
+    // #swagger.responses[404] = { description: 'The attempted GET of all Profiles was Not Found'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET all Profiles'}
+  Profile.find(
+    {},
+    {
+      username: 1,
+      motto: 1,
+      firstName: 1,
+      middleName: 1,
+      lastName: 1,
+      idol: 1,
+      photo: 1,
+      _id: 0,
     }
+  )
+    .sort({ username: 1 }) // Sort by name in ascending order
+    .then((data) => {        
+      // Create a new array with ordered objects *additionalInfo* at bottom
+      const orderedData = data.map(profile => ({
+        username: profile.username,
+        motto: profile.motto,
+        firstName: profile.firstName,
+        middleName: profile.middleName,
+        lastName: profile.lastName,
+        idol: profile.idol,
+        photo: profile.photo,
+      }));
+      if (!data)
+      res
+        .status(404)
+        .send({ message: 'No Profiles found! There are either no Profiles yet, or their was an error retrieving them.'});         
+    else res.send(orderedData); // Send the newly ordered data    
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while retrieving profiles.',
+      });
+    }); 
+  }
 
-// Find a single Profile with an id
+// Find a single Profile with a username id
 exports.findOne = (req, res) => {
-  /* #swagger.summary = "GETS all Profiles" */ 
-  /* #swagger.description = 'The selected Profile is displayed on the profiles page.' */ 
-  // #swagger.responses[200] = { description: 'SUCCESS, GET Retrieved the selected Profile' }
-  // #swagger.responses[404] = { description: 'The attempted GET of the selected Profile was Not Found'}
-  // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the USER PARAMETER'}
-  // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET the selected Profile'} 
+    /* #swagger.summary = "GETS a Profile by username" */ 
+    /* #swagger.description = 'The selected Profile is displayed on the profiles page.' */ 
+    // #swagger.responses[200] = { description: 'SUCCESS, GET Retrieved the selected Profile' }
+    // #swagger.responses[404] = { description: 'The attempted GET of the selected Profile was Not Found'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the USERNAME PARAMETER'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET the selected Profile'} 
   const username = req.params.username; 
   Profile.find({ username: username })
     .then((data) => {
@@ -70,8 +70,13 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.create = (req, res) => { 
-  // #swagger.responses[201] = { description: 'Successfully Created Profile Object' }
+exports.create = (req, res) => {
+    /* #swagger.summary = "POSTS user input to create a new Profile" */ 
+    /* #swagger.description = 'The entered Profile data is added to the database.' */ 
+    // #swagger.responses[201] = { description: 'SUCCESS, POST created a new Profile' }
+    // #swagger.responses[400] = { description: 'BAD REQUEST your POST was attempted with forbidden entries'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the Profile data'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET the selected Profile'} 
   // Validate request
   if (!req.body.username) {
     res.status(400).send({ message: 'Content can not be empty!' });
@@ -108,10 +113,13 @@ exports.create = (req, res) => {
 
 // Update a Profile by the username in the request
 exports.update = (req, res) => {
-  // #swagger.responses[204] = { description: 'Successfully Updated Profile' }
-  // #swagger.responses[400] = { description: 'Bad Request' }
-  // #swagger.responses[404] = { description: 'Not Found' }
-  // #swagger.responses[500] = { description: 'Internal Server Error' }
+    /* #swagger.summary = "UPDATES a Profile that has been selected by username with any new data entered" */   
+    /* #swagger.description = 'The updated data for the Profile changes the database' */      
+    // #swagger.responses[204] = { description: 'SUCCESS, PUT updated the selected Profile in the database' }
+    // #swagger.responses[400] = { description: 'BAD REQUEST your PUT was attempted with forbidden entries'}
+    // #swagger.responses[404] = { description: 'The attempted PUT of the specified Profile for updating was Not Found'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the Profile data'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to PUT the form page for updating the selected creationGoal'} 
   if (!req.body) {
     return res.status(400).send({
       message: 'Data to update can not be empty!',
@@ -127,6 +135,10 @@ exports.update = (req, res) => {
             "username": {
               "type": "string",
               "example": "Updated username"
+            },
+            "motto": {
+              "type": "string",
+              "example": "Updated motto"
             },
             "firstName": {
               "type": "string",
@@ -173,7 +185,12 @@ exports.update = (req, res) => {
 
 // Delete a Profile with the specified username in the request
 exports.delete = (req, res) => {
-  // #swagger.responses[200] = { description: 'Successful Deletion of Profile' }
+    /* #swagger.summary = "DELETES a Profile by its username" */ 
+    /* #swagger.description = 'After deletion it permanently removed fromt he database.' */
+    // #swagger.responses[200] = { description: 'SUCCESS, the Profile was DELETED' }   
+    // #swagger.responses[404] = { description: 'The selected Profile for DELETION was NOT FOUND'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the USERNAME PARAMETER'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to DELETE the Profile'}
   const username = req.params.username;
 
   Profile.findOneAndDelete({ username: username })

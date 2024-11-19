@@ -73,7 +73,8 @@
         }
       },
       "post": {
-        "description": "",
+        "summary": "POSTS user input to create a new Profile",
+        "description": "The entered Profile data is added to the database.",
         "parameters": [
           {
             "name": "body",
@@ -108,23 +109,23 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully Created Profile Object"
+            "description": "SUCCESS, POST   a new Profile"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "BAD REQUEST your POST was attempted with forbidden entries"
           },
           "412": {
-            "description": "Precondition Failed"
+            "description": "The PRECONDITION FAILED in the validation of the Profile data"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "There was an INTERNAL SERVER ERROR while trying to GET the selected Profile"
           }
         }
       }
     },
     "/profiles/{username}": {
       "get": {
-        "summary": "GETS all Profiles",
+        "summary": "GETS a Profile by username",
         "description": "The selected Profile is displayed on the profiles page.",
         "parameters": [
           {
@@ -142,7 +143,7 @@
             "description": "The attempted GET of the selected Profile was Not Found"
           },
           "412": {
-            "description": "The PRECONDITION FAILED in the validation of the USER PARAMETER"
+            "description": "The PRECONDITION FAILED in the validation of the USERNAME PARAMETER"
           },
           "500": {
             "description": "There was an INTERNAL SERVER ERROR while trying to GET the selected Profile"
@@ -150,7 +151,8 @@
         }
       },
       "put": {
-        "description": "",
+        "summary": "UPDATES a Profile that has been selected by username with any new data entered",
+        "description": "The updated data for the Profile changes the database",
         "parameters": [
           {
             "name": "username",
@@ -169,6 +171,10 @@
                 "username": {
                   "type": "string",
                   "example": "Updated username"
+                },
+                "motto": {
+                  "type": "string",
+                  "example": "Updated motto"
                 },
                 "firstName": {
                   "type": "string",
@@ -197,24 +203,25 @@
         ],
         "responses": {
           "204": {
-            "description": "Successfully Updated Profile"
+            "description": "SUCCESS, PUT   the selected Profile in the database"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "BAD REQUEST your PUT was attempted with forbidden entries"
           },
           "404": {
-            "description": "Not Found"
+            "description": "The attempted PUT of the specified Profile for updating was Not Found"
           },
           "412": {
-            "description": "Precondition Failed"
+            "description": "The PRECONDITION FAILED in the validation of the Profile data"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "There was an INTERNAL SERVER ERROR while trying to PUT the form page for updating the selected creationGoal"
           }
         }
       },
       "delete": {
-        "description": "",
+        "summary": "DELETES a Profile by its username",
+        "description": "After deletion it permanently removed fromt he database.",
         "parameters": [
           {
             "name": "username",
@@ -225,16 +232,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful Deletion of Profile"
+            "description": "SUCCESS, the Profile was DELETED"
           },
           "404": {
-            "description": "Not Found"
+            "description": "The selected Profile for DELETION was NOT FOUND"
           },
           "412": {
-            "description": "Precondition Failed"
+            "description": "The PRECONDITION FAILED in the validation of the USERNAME PARAMETER"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "There was an INTERNAL SERVER ERROR while trying to DELETE the Profile"
           }
         }
       }
@@ -775,7 +782,7 @@
             "description": "SUCCESS, PUT updated the selected creationGoal in the database"
           },
           "401": {
-            "description": "You are NOT AUTHORIZED to PuT the form page that updates the selected creationGoal"
+            "description": "You are NOT AUTHORIZED to PUT the form page that updates the selected creationGoal"
           },
           "404": {
             "description": "The attempted PUT of the specified creationGoal for updating was Not Found"
