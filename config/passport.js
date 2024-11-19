@@ -23,7 +23,7 @@ module.exports = function (passport) {
         clientID: process.env.GOOGLE_CLIENT_ID,             
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         // callbackURL: '/auth/google/callback',
-        callbackURL: (req) => getCallbackURL(req, '/auth/google/callback'), // Dynamic URL
+        callbackURL: getCallbackURL(req, '/auth/google/callback'), // Dynamic URL
         passReqToCallback: true, // Allow req to be passed to the verify callback
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
