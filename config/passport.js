@@ -12,6 +12,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const getCallbackURL = (req, path) => {
   const protocol = req.headers['x-forwarded-proto'] || req.protocol;
   const host = req.get('host');
+  console.log('Protocol:', req.headers['x-forwarded-proto'], 'Host:', req.get('host'));
   return `${protocol}://${host}${path}`;
 };
 
@@ -21,7 +22,8 @@ module.exports = function (passport) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,             
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback',
+        // callbackURL: '/auth/google/callback',
+        callbackURL: (req) => getCallbackURL(req, '/auth/google/callback'), // Dynamic URL
         passReqToCallback: true, // Allow req to be passed to the verify callback
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
@@ -74,7 +76,8 @@ module.exports = function (passport) {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: '/auth/github/callback',
+        // callbackURL: '/auth/github/callback',
+        callbackURL: (req) => getCallbackURL(req, '/auth/github/callback'), // Dynamic URL
         passReqToCallback: true, // Allow req to be passed to the verify callback
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
