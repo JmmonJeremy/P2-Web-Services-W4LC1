@@ -1,36 +1,27 @@
 const routes = require('express').Router();
 const profile = require('./profile');
-const creation = require('./creation');
+const users = require('./user');
 const swagger = require('./swagger');
-const oauth = require('./oauth');
-const oauthCallback = require('./oauth-callback');
+const static = require('./static');
 const auth = require('./auth'); // google auth 
 const dashboard = require('./dashboard'); // google auth 
 const creationGoals = require('./creationGoals'); // google auth 
 const { ensureGuest } = require('../middleware/auth'); // google auth 
+const home = require('../controllers/index.js');
+const oauth = require('./oauth'); //github oauth
+const oauthCallback = require('./oauth-callback'); //github oauth
 
 // google auth BASE/HOME/PAGE
 //  @desc   Login/Landing page
 //  @route  GET /
-routes.get('/', ensureGuest, (req, res) => {
-  try {  
-    const accessDenied = req.query.accessDenied === 'true';  // Check if 'accessDenied' is true in the query
-    res.status(accessDenied ? 401 : 200).render('login', {
-        layout: 'login',
-        accessDenied, // Pass accessDenied flag to the view
-    })
-  } catch (error) {
-    console.error(error);
-    res.status(500).render('error/500')
-  }
-});
+routes.get('/', ensureGuest, home.grantAccess);
 
-
-routes.use('/', oauth)
-routes.use('/', oauthCallback)
+// routes.use('/', oauth); //github oauth
+// routes.use('/', oauthCallback); //github oauth
+routes.use('/', static);
 routes.use('/', swagger);
 routes.use('/profiles', profile);
-routes.use('/creations', creation);
+routes.use('/user', users);
 routes.use('/auth', auth);  // google auth - put here instead of in root/index.js
 routes.use('/dashboard', dashboard);  // google auth - put here instead of in root/index.js
 routes.use('/creationGoals', creationGoals);  // google auth - put here instead of in root/index.js

@@ -9,17 +9,45 @@ console.log('Is Production:', isProduction); // Check if it's true or false
 
 const doc = {
   info: {
-    title: 'goal-creation-api',
-    description: 'Goal Creation Process App Personal Project'
+    title: 'creationGoal-api',
+    description: 'CreationGoal Process App Personal Project'
   },
   host: isProduction
     ? 'p2-web-services-w4.onrender.com'
     : 'localhost:3000',
   schemes: isProduction ? ['https'] : ['http'],
-  };
+//   components: {
+//     securitySchemes: {
+//       AuthorizationHeader: {
+//         type: 'http',
+//         scheme: 'bearer',
+//         bearerFormat: 'JWT',
+//         description: 'Bearer token for API access.',
+//       },
+//       CookieHeader: {
+//         type: 'apiKey',
+//         in: 'cookie',
+//         name: 'sessionId',
+//         description: 'Session cookie for authentication.',
+//       },
+//     },
+//   },
+//   security: [
+//     { AuthorizationHeader: [] },
+//     { CookieHeader: [] },
+//   ],
+//   components: {
+//     securitySchemes:{
+//         bearerAuth: {
+//             type: 'http',
+//             scheme: 'bearer'
+//         }
+//     }
+// }
+};
 
 const outputFile = './swagger.json';
-const endpointsFiles = ['./routes/index.js'];
+const endpointsFiles = ['./routes/index.js', 'index.js'];
 
 /* NOTE: If you are using the express Router, you must pass in the 'routes' only the 
 root file where the route starts, such as index.js, app.js, routes.js, etc ... */

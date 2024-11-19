@@ -36,6 +36,7 @@
     </thead>
     <tbody>
         {{#each creationGoals}}
+        {{log _id goal status}} <!-- This will log each creationGoal._id individually -->
         <tr>
             <td class="btm-bdr-yellow">{{creationNumber}}</td>
             <td class="btm-bdr-yellow">{{formatDate creationDate 'MMMM Do YYYY, h:mm:ss a'}}</td>            

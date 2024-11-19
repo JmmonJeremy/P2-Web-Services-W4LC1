@@ -1,44 +1,12 @@
 const db = require('../models');
 const Profile = db.Profile;
 
-exports.create = (req, res) => { 
-  // #swagger.responses[201] = { description: 'Successfully Created Profile Object' }
-  // Validate request
-  if (!req.body.username) {
-    res.status(400).send({ message: 'Content can not be empty!' });
-    return;
-  }
-
-  // Create a Profile
-  const profile = new Profile({
-    username: req.body.username,
-    motto: req.body.motto,
-    firstName: req.body.firstName,
-    middleName: req.body.middleName,
-    lastName: req.body.lastName,
-    idol: req.body.idol,
-    photo: req.body.photo
-  });
-  // Save Profile in the database
-  profile
-    .save(profile)
-    .then((data) => {
-      if(data) {
-        res.status(201).json(data);
-      } else {
-        res.status(400).json(data.error || 'The server did not process the request. Some error occurred while creating the Profile Object.');
-      }      
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while creating the Profile.',
-      });
-    });
-};
-
 exports.findAll = (req, res) => {
-  // #swagger.responses[200] = { description: 'Successfully Retrieved of all Profiles' }
+  /* #swagger.summary = "GETS all Profiles" */ 
+  /* #swagger.description = 'All Profiles are displayed on the profiles page.' */ 
+  // #swagger.responses[200] = { description: 'SUCCESS, GET Retrieved all the Profiles' }
+  // #swagger.responses[404] = { description: 'The attempted GET of all Profiles was Not Found'}
+  // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET all Profiles'}
     Profile.find(
       {},
       {
@@ -80,7 +48,12 @@ exports.findAll = (req, res) => {
 
 // Find a single Profile with an id
 exports.findOne = (req, res) => {
-  // #swagger.responses[200] = { description: 'Successfully Retrieved Profile' }
+  /* #swagger.summary = "GETS all Profiles" */ 
+  /* #swagger.description = 'The selected Profile is displayed on the profiles page.' */ 
+  // #swagger.responses[200] = { description: 'SUCCESS, GET Retrieved the selected Profile' }
+  // #swagger.responses[404] = { description: 'The attempted GET of the selected Profile was Not Found'}
+  // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the USER PARAMETER'}
+  // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET the selected Profile'} 
   const username = req.params.username; 
   Profile.find({ username: username })
     .then((data) => {
@@ -93,6 +66,42 @@ exports.findOne = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: 'Error retrieving Profile with username: "' + username + '"',
+      });
+    });
+};
+
+exports.create = (req, res) => { 
+  // #swagger.responses[201] = { description: 'Successfully Created Profile Object' }
+  // Validate request
+  if (!req.body.username) {
+    res.status(400).send({ message: 'Content can not be empty!' });
+    return;
+  }
+
+  // Create a Profile
+  const profile = new Profile({
+    username: req.body.username,
+    motto: req.body.motto,
+    firstName: req.body.firstName,
+    middleName: req.body.middleName,
+    lastName: req.body.lastName,
+    idol: req.body.idol,
+    photo: req.body.photo
+  });
+  // Save Profile in the database
+  profile
+    .save(profile)
+    .then((data) => {
+      if(data) {
+        res.status(201).json(data);
+      } else {
+        res.status(400).json(data.error || 'The server did not process the request. Some error occurred while creating the Profile Object.');
+      }      
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while creating the Profile.',
       });
     });
 };

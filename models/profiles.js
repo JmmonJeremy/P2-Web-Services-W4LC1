@@ -4,12 +4,12 @@ module.exports = (mongoose) => {
     mongoose.Schema(
       {
         username: { type: String, unique: true },
-        motto: String, 
-        firstName: String,
-        middleName: String,
-        lastName: String,
+        motto: { type: String },
+        firstName: { type: String },
+        middleName: { type: String },
+        lastName: { type: String },
         idol: String,
-        photo: { type: String }, // Store Base64 image as a string        
+        photo: { type: String, default: "https://ibb.co/jTH610t"}, // possibility is Base64 image as a string        
       },
       { timestamps: true }
     ),
