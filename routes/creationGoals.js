@@ -24,7 +24,7 @@ const validation = require('../middleware/creationGoal-validator.js');
     } */   
     // #swagger.responses[200] = { description: 'SUCCESS, GET returned all Public creationGoals that met the search criteria' }
     // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to GET the Public creationGoals'}
-    // #swagger.responses[404] = { description: 'The attempted GET of all Public creationGoals within the search were Not Found GET'}
+    // #swagger.responses[404] = { description: 'The attempted GET of all Public creationGoals within the search were Not Found'}
     // #swagger.end
     routes.get('/search/:query', ensureAuth, creationGoal.getPublicSearchResults);
 

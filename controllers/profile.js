@@ -70,13 +70,14 @@ exports.findOne = (req, res) => {
     });
 };
 
+// create a new Profile
 exports.create = (req, res) => {
     /* #swagger.summary = "POSTS user input to create a new Profile" */ 
     /* #swagger.description = 'The entered Profile data is added to the database.' */ 
     // #swagger.responses[201] = { description: 'SUCCESS, POST created a new Profile' }
     // #swagger.responses[400] = { description: 'BAD REQUEST your POST was attempted with forbidden entries'}
     // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the Profile data'}
-    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET the selected Profile'} 
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to POST the selected Profile'} 
   // Validate request
   if (!req.body.username) {
     res.status(400).send({ message: 'Content can not be empty!' });
@@ -114,8 +115,8 @@ exports.create = (req, res) => {
 // Update a Profile by the username in the request
 exports.update = (req, res) => {
     /* #swagger.summary = "UPDATES a Profile that has been selected by username with any new data entered" */   
-    /* #swagger.description = 'The updated data for the Profile changes the database' */      
-    // #swagger.responses[204] = { description: 'SUCCESS, PUT updated the selected Profile in the database' }
+    /* #swagger.description = 'The changed data for the Profile updates the database' */      
+    // #swagger.responses[204] = { description: 'SUCCESS (with no content returned), PUT updated the selected Profile in the database' }
     // #swagger.responses[400] = { description: 'BAD REQUEST your PUT was attempted with forbidden entries'}
     // #swagger.responses[404] = { description: 'The attempted PUT of the specified Profile for updating was Not Found'}
     // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the Profile data'}
@@ -186,7 +187,7 @@ exports.update = (req, res) => {
 // Delete a Profile with the specified username in the request
 exports.delete = (req, res) => {
     /* #swagger.summary = "DELETES a Profile by its username" */ 
-    /* #swagger.description = 'After deletion it permanently removed fromt he database.' */
+    /* #swagger.description = 'With deletion it's permanently removed from the database.' */
     // #swagger.responses[200] = { description: 'SUCCESS, the Profile was DELETED' }   
     // #swagger.responses[404] = { description: 'The selected Profile for DELETION was NOT FOUND'}
     // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the USERNAME PARAMETER'}

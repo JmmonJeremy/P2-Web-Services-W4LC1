@@ -143,7 +143,7 @@ DELETE http://localhost:3000/profiles/DemoWoman
 GET http://localhost:3000/user
 Content-Type: application/json
 ### getting 1 profile by username
-GET http://localhost:3000/user/672696cfd8c33d2cc0a70a23
+GET http://localhost:3000/user/673c4e9fd5aa0feb6b515bd3
 Content-Type: application/json
 // 3 WAYS OF ALTERING DATA FOR USERS ******************************************************************
 ### creating a profile with a post

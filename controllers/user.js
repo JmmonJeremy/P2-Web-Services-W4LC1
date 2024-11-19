@@ -2,7 +2,11 @@ const db = require('../models');
 const users = db.User;
 
 exports.findAll = (req, res) => {
-  // #swagger.responses[200] = { description: 'Successfully Retrieved of all users' }
+    /* #swagger.summary = "GETS all the users" */   
+    /* #swagger.description = 'All users are displayed.' */    
+    // #swagger.responses[200] = { description: 'SUCCESS, GET retrieved all users' }   
+    // #swagger.responses[404] = { description: 'The attempted GET of all users was Not Found'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET all users'}
   console.log(users)
     users.find({})
       .sort({ lastName: 1 }) // Sort by lastName in ascending order
@@ -22,26 +26,45 @@ exports.findAll = (req, res) => {
     }
 
 // Find a single user with an id
-exports.findOne = (req, res) => {
-  // #swagger.responses[200] = { description: 'Successfully Retrieved user' }
-  const id = req.params.id; 
-  users.find({ _id: id })
-    .then((data) => {
-      if (!data)
-        res
-          .status(404)
-          .send({ message: 'user with id ' + id + ' not found!'});
-      else res.send(data[0]);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: 'Error retrieving user with id: "' + id + '"',
-      });
+exports.findOne = async (req, res) => {
+    /* #swagger.summary = "GETS a user by their _id" */ 
+    /* #swagger.description = 'The selected user is displayed.' */ 
+    // #swagger.responses[200] = { description: 'SUCCESS, GET Retrieved the selected user' }
+    // #swagger.responses[404] = { description: 'The attempted GET of the selected user was Not Found'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the _id PARAMETER'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET the selected user'}    
+  const id = req.params.id;
+  console.log(id);
+
+  try {
+    // Find user by ID
+    const user = await users.findById(id).lean();
+
+    // If user not found, send a 404 response and return
+    if (!user) {
+      return res.status(404).send({ message: `User with id ${id} not found!` });
+    }
+
+    // If user found, send user data   
+    return res.status(200).send(user); // Send user data as response
+
+  } catch (err) {
+    // Handle errors
+    console.error(err);
+    return res.status(500).send({
+        message: `Error retrieving user with id: ${id}`,
     });
+  }
 };
 
+// create a new user
 exports.create = (req, res) => { 
-  // #swagger.responses[201] = { description: 'Successfully Created users Object' }
+    /* #swagger.summary = "POSTS input to create a new user" */ 
+    /* #swagger.description = 'The entered user information is added to the database.' */ 
+    // #swagger.responses[201] = { description: 'SUCCESS, POST created a new user' }
+    // #swagger.responses[400] = { description: 'BAD REQUEST your POST was attempted with forbidden entries'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the user data'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to POST the selected user'}   
   console.log('Request Body:', req.body); // Log the entire request body
   // Validate request
   if (!req.body.email) {
@@ -85,10 +108,13 @@ exports.create = (req, res) => {
 
 // Update a user by the id in the request (For some reason auto-gen misses the added responses in update function only)
 exports.update = (req, res) => {
-  // #swagger.responses[204] = { description: 'Successfully Updated user' }
-  // #swagger.responses[400] = { description: 'Bad Request' }
-  // #swagger.responses[404] = { description: 'Not Found' }
-  // #swagger.responses[500] = { description: 'Internal Server Error' }
+  /* #swagger.summary = "UPDATES a user that has been selected by _id with any new data entered" */   
+    /* #swagger.description = 'The changed data for the user updates the database' */      
+    // #swagger.responses[204] = { description: 'SUCCESS (with no content returned), PUT updated the selected user in the database' }
+    // #swagger.responses[400] = { description: 'BAD REQUEST your PUT was attempted with forbidden entries'}
+    // #swagger.responses[404] = { description: 'The attempted PUT of the specified user for updating was Not Found'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the user data'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to PUT the data change'}  
   if (!req.body) {
     return res.status(400).send({
       message: 'Data to update can not be empty!',
@@ -106,22 +132,14 @@ exports.update = (req, res) => {
         required: true,
          '@schema': {
           "type": "object",
-          "properties": {
-            "googleId": {
-              "type": "string",
-              "example": "Updated googleId"
-            },
-            "githubId": {
-              "type": "string",
-              "example": "Updated githubId"
-            },
+          "properties": {       
             "email": {
               "type": "string",
               "example": "Updated email"
             },
-            "displayname": {
+            "displayName": {
               "type": "string",
-              "example": "Updated displayname"
+              "example": "Updated displayName"
             },
             "firstName": {
               "type": "string",
@@ -176,7 +194,12 @@ exports.update = (req, res) => {
 
 // Delete a user with the specified id in the request
 exports.delete = (req, res) => {
-  // #swagger.responses[200] = { description: 'Successful Deletion of user' }
+  /* #swagger.summary = "DELETES a user by its _id" */ 
+    /* #swagger.description = 'With deletion it's permanently removed from the database.' */
+    // #swagger.responses[200] = { description: 'SUCCESS, the user was DELETED' }   
+    // #swagger.responses[404] = { description: 'The selected user for DELETION was NOT FOUND'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the _id PARAMETER'}
+    // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to DELETE the user'} 
   const id = req.params.id; 
 
   users.findOneAndDelete({ _id: id }) 
