@@ -104,6 +104,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
+    httpOnly: true,  // Prevents access to the cookie via JavaScript (XSS protection)
+    maxAge: 24 * 60 * 60 * 1000 // 1 day (adjust if needed)
+  }
 }));
 
 // google auth   (Order #2)(OLD ORDER #9)

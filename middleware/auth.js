@@ -12,7 +12,12 @@ module.exports = {
     // console.log("Authorization: " + req.headers['authorization']); //works only for GitHub
     console.log("Authorization: Bearer " + req.accessToken);
     // console.log("res.locals:", res.locals); 
-    console.log(`Authenticated user: ${req.user.id} |-> ${req.user.displayName}`); 
+    // Check if `req.user` exists before accessing `id`
+    if (req.user) {
+      console.log(`Authenticated user: ${req.user.id} |-> ${req.user.displayName}`);
+    } else {
+      console.log("User not found in session");
+    }  
     if (req.isAuthenticated()) {     
       return next();
     } else {
