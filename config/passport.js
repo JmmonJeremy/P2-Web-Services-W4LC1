@@ -16,14 +16,14 @@ module.exports = function (passport) {
         clientID: process.env.GOOGLE_CLIENT_ID,             
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: 'https://p2-web-services-w4.onrender.com/auth/google/callback',      
-        passReqToCallback: true, // Allow req to be passed to the verify callback
+        // passReqToCallback: true, // Allow req to be passed to the verify callback
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
       async (req, accessToken, refreshToken, profile, done) => {
         console.log("GOOGLE Access Token:", accessToken);
 
-        const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/google/callback`;
-        console.log("Absolute Callback URL for Google:", absoluteCallbackURL);        
+        // const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/google/callback`;
+        // console.log("Absolute Callback URL for Google:", absoluteCallbackURL);        
         
         const email = profile.emails && profile.emails[0].value;
         const newUser = {
@@ -69,14 +69,14 @@ module.exports = function (passport) {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: 'https://p2-web-services-w4.onrender.com/auth/github/callback', // Default callback, to be overridden in the route      
-        passReqToCallback: true, // Allow req to be passed to the verify callback
+        // passReqToCallback: true, // Allow req to be passed to the verify callback
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
       async (req, accessToken, refreshToken, profile, done) => {
         console.log("GITHUB Access Token:", accessToken);
 
-        const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/github/callback`;
-        console.log("Absolute Callback URL for GitHub:", absoluteCallbackURL);
+        // const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/github/callback`;
+        // console.log("Absolute Callback URL for GitHub:", absoluteCallbackURL);
 
         const email = profile.emails && profile.emails[0].value;
 
