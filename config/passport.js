@@ -131,6 +131,7 @@ module.exports = function (passport) {
   // from https://www.passportjs.org/tutorials/google/session/ 
   // done was used to replace cb (short fro callback) in the code
  passport.serializeUser(async (wrappedUser, done) => {
+    console.log("Deserializing user ID:", id);
     // Save only the user ID and accessToken   
     done(null, { id: wrappedUser.user._id, accessToken: wrappedUser.accessToken });   
   });
