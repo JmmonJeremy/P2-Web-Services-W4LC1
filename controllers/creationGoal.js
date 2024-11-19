@@ -67,7 +67,7 @@ exports.getUserCreationGoals = async (req, res) => {
   }
 };
 
-// #3 extra "Get" method to get a specific creationGoal belonging to the user for editing
+// #3 extra "Get" method to get a specific creationGoal by _id belonging to the user for editing
 exports.getUsersCreationGoalById = async (req, res) => { 
     /* #swagger.security = [{ "bearerAuth": [] }] */
     /* #swagger.summary = "GETS the creationGoal belonging to a user by _id for the user to edit & update ---------- (!!!OAUTH PROTECTED ROUTE!!!)" */   
@@ -75,6 +75,7 @@ exports.getUsersCreationGoalById = async (req, res) => {
     // #swagger.responses[200] = { description: 'SUCCESS, GET returned the selected creationGoal belonging to the user' }
     // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to GET this creationGoal for editing'}
     // #swagger.responses[404] = { description: 'The selected creationGoal was NOT FOUND' }
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the CREATIONGOAL _id PARAMETER'}
     // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to GET the selected creationGoal'}
   try {
     const creationGoal = await CreationGoal.findOne({
@@ -173,6 +174,7 @@ exports.addCreationGoal = async (req, res) => {
     /* #swagger.description = 'The filled out form for a new creationGoal is added to the database & the user is notified & redirected to the dashboard page.<br><b>OPTIONAL FIELDS Category Titles to Copy & Pate to JSON Body -> "creationNumber":, "creationDate":, & "status":</b>' */      
     // #swagger.responses[201] = { description: 'SUCCESS, POST added a new creationGoal to the database' }
     // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to POST the form page that adds a new creationGoal'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the creationGoal data'}
     // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to POST the form page for adding a creationGoal'}
   try {
         /* #swagger.parameters['body'] = {
@@ -242,6 +244,7 @@ exports.updateCreationGoal = async (req, res) => {
   // #swagger.responses[200] = { description: 'SUCCESS, PUT updated the selected creationGoal in the database' }
   // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to PUT the form page that updates the selected creationGoal'}
   // #swagger.responses[404] = { description: 'The attempted PUT of the specified creationGoal for updating was Not Found'}
+  // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the creationGoal data'}
   // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to PUT the form page for updating the selected creationGoal'}
   /* #swagger.parameters['id'] = {       
          description: 'Equal to the Unique identifier _id field for the creationGoal (ie: 6736b9dc941b8c39d5d9ef23)',      
@@ -333,6 +336,7 @@ exports.deleteCreationGoal = async (req, res) => {
     // #swagger.responses[200] = { description: 'SUCCESS, the creationGoal was DELETED' }
     // #swagger.responses[401] = { description: 'You are NOT AUTHORIZED to DELETE this creationGoal'}
     // #swagger.responses[404] = { description: 'The selected creationGoal for DELETION was NOT FOUND'}
+    // #swagger.responses[412] = { description: 'The PRECONDITION FAILED in the validation of the CREATIONGOAL _id PARAMETER'}
     // #swagger.responses[500] = { description: 'There was an INTERNAL SERVER ERROR while trying to DELETE all Public creationGoals'}
   try {
     let creationGoal = await CreationGoal.findById(req.params.id).lean()

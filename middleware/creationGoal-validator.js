@@ -1,8 +1,8 @@
 const validator = require('../helpers/validation-methods');
 
 // Sources: https://github.com/mikeerickson/validatorjs & https://blog.logrocket.com/handle-data-validation-node-js-validatorjs/
-const acceptCreationInput = (req, res, next) => {
-  const creatoinValidationRules = {
+const acceptCreationGoalInput = (req, res, next) => {
+  const creationGoalValidationRules = {
     creationNumber: 'integer',
     creationDate: 'date',    
     goal: 'required|string',
@@ -14,7 +14,7 @@ const acceptCreationInput = (req, res, next) => {
     action: 'string',
     status: 'string'
   };
-  validator(req.body, creationValidationRules, {}, (err, status) => {
+  validator(req.body, creationGoalValidationRules, {}, (err, status) => {
     if (!status) {
       res.status(412).send({
         success: false,
@@ -27,9 +27,9 @@ const acceptCreationInput = (req, res, next) => {
   });
 };
 
-const approveCreationId = (req, res, next) => {
+const approveCreationGoalId = (req, res, next) => {
   const rules = {
-    _id: 'required'
+    _id: 'required|alpha_num'
   };
   // Apply validation to req.params which holds URL parameters
   validator({ _id: req.params.id }, rules, {}, (err, status) => {
@@ -50,9 +50,25 @@ const approveUserId = (req, res, next) => {
     user_id: 'required|alpha_num'
   };
   // Apply validation to req.params which holds URL parameters
-  validator({ user_id: req.params.userId }, rules, {}, (err, status) => {
-    
-    console.log(`###user_id: ${req.params.userId}`)   
+  validator({ user_id: req.params.userId }, rules, {}, (err, status) => {   
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: 'Validation failed',
+        data: err
+      });
+    } else {
+      next();
+    }
+  });
+};
+
+const approveSearchQuery = (req, res, next) => {
+  const rules = {
+    search: 'string'
+  };
+  // Apply validation to req.params which holds URL parameters
+  validator({ search: req.query.query }, rules, {}, (err, status) => {   
     if (!status) {
       res.status(412).send({
         success: false,
@@ -66,7 +82,8 @@ const approveUserId = (req, res, next) => {
 };
 
 module.exports = {
-  acceptCreationInput,
-  approveCreationId,
-  approveUserId
+  acceptCreationGoalInput,
+  approveCreationGoalId,
+  approveUserId,
+  approveSearchQuery
 };

@@ -596,6 +596,9 @@
           "404": {
             "description": "The selected creationGoal was NOT FOUND"
           },
+          "412": {
+            "description": "The PRECONDITION FAILED in the validation of the CREATIONGOAL _id PARAMETER"
+          },
           "500": {
             "description": "There was an INTERNAL SERVER ERROR while trying to GET the selected creationGoal"
           }
@@ -706,6 +709,9 @@
           "401": {
             "description": "You are NOT AUTHORIZED to POST the form page that adds a new creationGoal"
           },
+          "412": {
+            "description": "The PRECONDITION FAILED in the validation of the creationGoal data"
+          },
           "500": {
             "description": "There was an INTERNAL SERVER ERROR while trying to POST the form page for adding a creationGoal"
           }
@@ -784,6 +790,9 @@
           "404": {
             "description": "The attempted PUT of the specified creationGoal for updating was Not Found"
           },
+          "412": {
+            "description": "The PRECONDITION FAILED in the validation of the creationGoal data"
+          },
           "500": {
             "description": "There was an INTERNAL SERVER ERROR while trying to PUT the form page for updating the selected creationGoal"
           }
@@ -814,6 +823,9 @@
           },
           "404": {
             "description": "The selected creationGoal for DELETION was NOT FOUND"
+          },
+          "412": {
+            "description": "The PRECONDITION FAILED in the validation of the CREATIONGOAL _id PARAMETER"
           },
           "500": {
             "description": "There was an INTERNAL SERVER ERROR while trying to DELETE all Public creationGoals"
@@ -849,6 +861,9 @@
           },
           "404": {
             "description": "The attempted GET of specified creationGoal was Not Found"
+          },
+          "412": {
+            "description": "The PRECONDITION FAILED in the validation of the CREATIONGOAL _id PARAMETER"
           }
         },
         "security": [
@@ -869,7 +884,7 @@
           {
             "name": "query",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "string",
             "description": "Search term for creationGoals"
           }
@@ -883,6 +898,9 @@
           },
           "404": {
             "description": "The attempted GET of all Public creationGoals within the search were Not Found"
+          },
+          "412": {
+            "description": "The PRECONDITION FAILED in the validation of the QUERY PARAMETER"
           }
         },
         "security": [
