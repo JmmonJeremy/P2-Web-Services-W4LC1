@@ -9,12 +9,6 @@ const User = db.User;
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-const getCallbackURL = (req, path) => {
-  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
-  const host = req.get('host');
-  return `${protocol}://${host}${path}`;
-};
-
 module.exports = function (passport) {
   passport.use(
     new GoogleStrategy(
@@ -22,10 +16,9 @@ module.exports = function (passport) {
         clientID: process.env.GOOGLE_CLIENT_ID,             
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback',
-        passReqToCallback: true, // Allow req to be passed to the verify callback
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
-      async (req, accessToken, refreshToken, profile, done) => {
+      async (accessToken, refreshToken, profile, done) => {
         console.log("GOOGLE Access Token:", accessToken);
 
         const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/github/callback`;
@@ -74,12 +67,10 @@ module.exports = function (passport) {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        // callbackURL: '/auth/github/callback',
-        callbackURL: (req) => getCallbackURL(req, '/auth/github/callback'), // Dynamic URL
-        passReqToCallback: true, // Allow req to be passed to the verify callback
+        callbackURL: '/auth/github/callback',
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
-      async (req, accessToken, refreshToken, profile, done) => {
+      async (accessToken, refreshToken, profile, done) => {
         console.log("GITHUB Access Token:", accessToken);
 
         const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/github/callback`;
