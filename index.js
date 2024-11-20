@@ -151,10 +151,7 @@ app.engine('.hbs', engine({ helpers: { formatDate, stripTags, truncate, editIcon
 app.set('view engine', '.hbs');
 
 // CORS setup    (Order #5)(OLD ORDER #2)
-app.use(cors({
-  origin: 'https://p2-web-services-w4.onrender.com', 
-  credentials: true // Allow cookies to be sent
-}));
+app.use(cors());
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -192,11 +189,6 @@ db.mongoose
     console.log('Cannot connect to the database!', err);
     process.exit();
   });
-
-app.use((req, res, next) => {
-  console.log("Session:", req.session);
-  next();
-});
 
 // Start the server (Order #10)(OLD ORDER #10)
 const PORT = process.env.PORT || 8080;
