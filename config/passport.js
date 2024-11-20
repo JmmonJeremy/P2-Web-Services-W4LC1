@@ -9,22 +9,29 @@ const User = db.User;
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+const getCallbackURL = (req, path) => {
+  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+  const host = req.get('host');
+  console.log('Protocol:', req.headers['x-forwarded-proto'], 'Host:', req.get('host'));
+  return `${protocol}://${host}${path}`;
+};
+
 module.exports = function (passport) {
   passport.use(
     new GoogleStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,             
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-
-        callbackURL: '/auth/google/callback',      
-        // passReqToCallback: true, // Allow req to be passed to the verify callback
+        // callbackURL: '/auth/google/callback',
+        callbackURL: getCallbackURL(req, '/auth/google/callback'), // Dynamic URL
+        passReqToCallback: true, // Allow req to be passed to the verify callback
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
       async (req, accessToken, refreshToken, profile, done) => {
         console.log("GOOGLE Access Token:", accessToken);
 
-        const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/google/callback`;
-        console.log("Absolute Callback URL for Google:", absoluteCallbackURL);        
+        const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/github/callback`;
+        console.log("Absolute Callback URL for Google:", absoluteCallbackURL);
         
         const email = profile.emails && profile.emails[0].value;
         const newUser = {
@@ -71,6 +78,7 @@ module.exports = function (passport) {
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         callbackURL: '/auth/github/callback', // Default callback, to be overridden in the route      
         // passReqToCallback: true, // Allow req to be passed to the verify callback
 =======
@@ -78,6 +86,10 @@ module.exports = function (passport) {
 =======
         callbackURL: '/auth/github/callback', // Default callback, to be overridden in the route      
 >>>>>>> parent of e4bff16 (Commented out dynamically setting in route and hardcoded render callback.)
+=======
+        // callbackURL: '/auth/github/callback',
+        callbackURL: (req) => getCallbackURL(req, '/auth/github/callback'), // Dynamic URL
+>>>>>>> parent of fba55f5 (Moved code for https assurance in production to auth.js in routes and out of passport.js.)
         passReqToCallback: true, // Allow req to be passed to the verify callback
 >>>>>>> parent of 3305f49 (Commented out HTTPS production middleware)
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
