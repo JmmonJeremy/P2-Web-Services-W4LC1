@@ -29,9 +29,7 @@ routes.get(
   // #swagger.ignore = true
   // don't send to swagger docs it is not funtional by itself
   '/google/callback', auth.checkGoogleCode, (req, res, next) => {
-    console.log('FROM GOOGLE CB- Authenticated user:', req.user);  // Check if the user is authenticated
-    console.log('FROM GOOGLE CB- Session set after OAuth:', req.session); // Check if the session is properly set here
-    console.log('FROM GOOGLE CB- Set-Cookie header:', res.get('Set-Cookie')); // Check if the session cookie is in the response headers
+    console.log('Session set after OAuth:', req.session); // Check if the session is properly set here
     passport.authenticate('google', { failureRedirect: '/' });
     res.status(200).redirect('/dashboard');
   }
@@ -53,9 +51,7 @@ routes.get(
   // #swagger.ignore = true
   // don't send to swagger docs it is not funtional by itself
   '/github/callback', auth.checkGithubCode, (req, res, next) => {
-    console.log('FROM GITHUB CB- Authenticated user:', req.user);  // Check if the user is authenticated
-    console.log('FROM GITHUB CB- Session set after OAuth:', req.session); // Check if the session is properly set here
-    console.log('FROM GITHUB CB- Set-Cookie header:', res.get('Set-Cookie')); // Check if the session cookie is in the response headers
+    // const callbackURL = getCallbackURL(req, '/auth/github/callback');
     passport.authenticate('github',  { failureRedirect: '../error/401' }); 
     // console.log("res.query: " + CircularJSON.stringify(res, null, 2));
     res.status(200).redirect('/dashboard');
