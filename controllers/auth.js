@@ -26,7 +26,7 @@ exports.checkGithubCode = (req, res, next) => {
   const authorizationCode = req.query.code;
   
   if (authorizationCode) {
-    console.log("REQ Object: " + req)
+    console.log("REQ Object: " + JSON.stringify(req))
     console.log("GitHub conCB- A Cookie: connect.sid=" + req.cookies['connect.sid']);
     console.log("GitHub conCB- Authorization Code:", authorizationCode);
     // You could save this to the session or use it to fetch the access token
