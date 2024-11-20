@@ -29,7 +29,7 @@ routes.get(
   // #swagger.ignore = true
   // don't send to swagger docs it is not funtional by itself
   '/google/callback', auth.checkGoogleCode, (req, res, next) => {
-    // const callbackURL = getCallbackURL(req, '/auth/google/callback');
+    const callbackURL = getCallbackURL(req, '/auth/google/callback');
     passport.authenticate('google', { failureRedirect: '/' });
     res.status(200).redirect('/dashboard');
   }
@@ -51,7 +51,7 @@ routes.get(
   // #swagger.ignore = true
   // don't send to swagger docs it is not funtional by itself
   '/github/callback', auth.checkGithubCode, (req, res, next) => {
-    // const callbackURL = getCallbackURL(req, '/auth/github/callback');
+    const callbackURL = getCallbackURL(req, '/auth/github/callback');
     passport.authenticate('github',  { failureRedirect: '../error/401' }); 
     // console.log("res.query: " + CircularJSON.stringify(res, null, 2));
     res.status(200).redirect('/dashboard');

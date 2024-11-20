@@ -70,10 +70,14 @@ module.exports = function (passport) {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
 <<<<<<< HEAD
+<<<<<<< HEAD
         callbackURL: '/auth/github/callback', // Default callback, to be overridden in the route      
         // passReqToCallback: true, // Allow req to be passed to the verify callback
 =======
         callbackURL: 'https://p2-web-services-w4.onrender.com/auth/github/callback', // Default callback, to be overridden in the route      
+=======
+        callbackURL: '/auth/github/callback', // Default callback, to be overridden in the route      
+>>>>>>> parent of e4bff16 (Commented out dynamically setting in route and hardcoded render callback.)
         passReqToCallback: true, // Allow req to be passed to the verify callback
 >>>>>>> parent of 3305f49 (Commented out HTTPS production middleware)
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
