@@ -29,7 +29,7 @@ routes.get(
   // #swagger.ignore = true
   // don't send to swagger docs it is not funtional by itself
   '/google/callback', auth.checkGoogleCode, (req, res, next) => {
-    // const callbackURL = getCallbackURL(req, '/auth/google/callback');
+    console.log('Session set after OAuth:', req.session); // Check if the session is properly set here
     passport.authenticate('google', { failureRedirect: '/' });
     res.status(200).redirect('/dashboard');
   }
