@@ -16,6 +16,34 @@ const doc = {
     ? 'p2-web-services-w4lc1.onrender.com'
     : 'localhost:3000',
   schemes: isProduction ? ['https'] : ['http'],
+//   components: {
+//     securitySchemes: {
+//       AuthorizationHeader: {
+//         type: 'http',
+//         scheme: 'bearer',
+//         bearerFormat: 'JWT',
+//         description: 'Bearer token for API access.',
+//       },
+//       CookieHeader: {
+//         type: 'apiKey',
+//         in: 'cookie',
+//         name: 'sessionId',
+//         description: 'Session cookie for authentication.',
+//       },
+//     },
+//   },
+//   security: [
+//     { AuthorizationHeader: [] },
+//     { CookieHeader: [] },
+//   ],
+//   components: {
+//     securitySchemes:{
+//         bearerAuth: {
+//             type: 'http',
+//             scheme: 'bearer'
+//         }
+//     }
+// }
 };
 
 const outputFile = './swagger.json';
