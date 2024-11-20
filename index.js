@@ -21,11 +21,11 @@ const app = express();
 app.set('trust proxy', 1); // Trust the first proxy (required for Render's setup)
 
 // Log the X-Forwarded-Proto header and protocol
-app.use((req, res, next) => {
-  console.log('X-Forwarded-Proto:', req.headers['x-forwarded-proto']);
-  console.log('Protocol:', req.protocol); // Should output 'https' if correctly forwarded
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('X-Forwarded-Proto:', req.headers['x-forwarded-proto']);
+//   console.log('Protocol:', req.protocol); // Should output 'https' if correctly forwarded
+//   next();
+// });
 
 const options = {
   swaggerOptions: {
