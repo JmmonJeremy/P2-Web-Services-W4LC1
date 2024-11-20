@@ -97,7 +97,7 @@ app.use(methodOverride(function (req, res) {
 require('./config/passport')(passport)
 connectDB(); // google auth database add-on database connection
 
-// google auth   (Order #1)(OLD ORDER #8)
+// google auth   (Order #1)(OLD ORDER #8) *Session Middleware (Before Authentication)
 // Changing order of Sessions & Passport middleware up to top here fixed not being found
 // Sessions middleware code from: https://www.npmjs.com/package/express-session 
 // Sessions middleware
@@ -115,7 +115,7 @@ app.use(session({
   } 
 }));
 
-// google auth   (Order #2)(OLD ORDER #9)
+// google auth   (Order #2)(OLD ORDER #9) *Passport Middleware (After Session Middleware)
 // Passport middleware
 // console.log('Initializing Passport middleware...');
 app.use(passport.initialize());
