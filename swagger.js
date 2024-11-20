@@ -13,7 +13,7 @@ const doc = {
     description: 'CreationGoal Process App Personal Project'
   },
   host: isProduction
-    ? 'p2-web-services-w4.onrender.com'
+    ? 'p2-web-services-w4lc1.onrender.com'
     : 'localhost:3000',
   schemes: isProduction ? ['https'] : ['http'],
 };

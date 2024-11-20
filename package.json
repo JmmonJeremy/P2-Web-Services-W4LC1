@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JmmonJeremy/P2-Web-Services-W4.git"
+    "url": "git+https://github.com/JmmonJeremy/P2-Web-Services-W4LC1.git"
   },
   "author": "Jeremy Troy Suchanski",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JmmonJeremy/P2-Web-Services-W4/issues"
+    "url": "https://github.com/JmmonJeremy/P2-Web-Services-W4LC1/issues"
   },
-  "homepage": "https://github.com/JmmonJeremy/P2-Web-Services-W4#readme",
+  "homepage": "https://github.com/JmmonJeremy/P2-Web-Services-W4LC1#readme",
   "dependencies": {
     "axios": "^1.7.7",
     "circular-json": "^0.5.9",
