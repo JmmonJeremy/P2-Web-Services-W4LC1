@@ -20,9 +20,6 @@ module.exports = function (passport) {
       },
       async (accessToken, refreshToken, profile, done) => {
         console.log("GOOGLE Access Token:", accessToken);
-
-        const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/github/callback`;
-        console.log("Absolute Callback URL for Google:", absoluteCallbackURL);
         
         const email = profile.emails && profile.emails[0].value;
         const newUser = {
@@ -71,11 +68,8 @@ module.exports = function (passport) {
         failureRedirect: '/dashboard?accessDenied=true', // Redirect with error flag
       },
       async (accessToken, refreshToken, profile, done) => {
+
         console.log("GITHUB Access Token:", accessToken);
-
-        const absoluteCallbackURL = `${req.protocol}://${req.get('host')}/auth/github/callback`;
-        console.log("Absolute Callback URL for GitHub:", absoluteCallbackURL);
-
         const email = profile.emails && profile.emails[0].value;
 
         // Split displayName into firstName and lastName based on the first space
