@@ -71,14 +71,14 @@ app.use(express.json())
 app.use(cookieParser());
 
 // Enforce HTTPS in production
-// if (process.env.NODE_ENV === 'production') {
-//   app.use((req, res, next) => {
-//     if (req.headers['x-forwarded-proto'] !== 'https') {
-//       return res.redirect(`https://${req.headers.host}${req.url}`);
-//     }
-//     next();
-//   });
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+}
 
 // Method override from: https://www.npmjs.com/package/method-override
 app.use(methodOverride(function (req, res) {
@@ -111,8 +111,8 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
     httpOnly: true,  // Prevents access to the cookie via JavaScript (XSS protection)
     sameSite: 'none',
-    maxAge: 24 * 60 * 60 * 1000 // 1 day (adjust if needed)
-  }
+    // maxAge: 24 * 60 * 60 * 1000 // 1 day (adjust if needed)
+  } 
 }));
 
 // google auth   (Order #2)(OLD ORDER #9)
@@ -198,7 +198,8 @@ db.mongoose
   });
 
 app.use((req, res, next) => {
-  console.log("Session:", req.session);
+  console.log("NODE_ENV:" +process.env.NODE_ENV);
+  console.log("LOGGING SESSION FROM INDEX.JS:", req.session);
   next();
 });
 
